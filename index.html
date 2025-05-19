@@ -81,9 +81,7 @@
   </select>
 
   <label for="engineCC">Select engine displacement (cc):</label>
-  <select id="engineCC">
-    <!-- Options will be dynamically populated -->
-  </select>
+  <select id="engineCC"></select>
 
   <label for="vespaUse">Main use:</label>
   <select id="vespaUse">
@@ -148,54 +146,81 @@
 
       let setup = { cylinder: "—", carb: "—", exhaust: "—", crank: "—", gear: "—", ignition: "—" };
 
-      if (model.startsWith("V") || model === "PK" || model === "Primavera" || model === "ET3") {
-        // Smallframe logic
-        if (engineCC <= 50) {
+      if (engineCC <= 50) {
+        if (budget === "Low") {
           setup = {
-            cylinder: "75cc DR",
+            cylinder: "65cc DR",
+            carb: "16.10",
+            exhaust: "Stock",
+            crank: "Stock",
+            gear: "Standard",
+            ignition: "Points"
+          };
+        } else if (budget === "Medium") {
+          setup = {
+            cylinder: "75cc Polini",
             carb: "16.16",
             exhaust: "Sito Plus",
-            crank: "Stock",
-            gear: "3.00 ratio",
-            ignition: "Electronic"
-          };
-        } else if (engineCC <= 90) {
-          setup = {
-            cylinder: "102cc Polini",
-            carb: "19mm",
-            exhaust: "Banana",
             crank: "Stock",
             gear: "Short 4th",
             ignition: "Electronic"
           };
         } else {
           setup = {
-            cylinder: "130cc Malossi",
-            carb: "24mm",
-            exhaust: "Simonini",
+            cylinder: "85cc DR",
+            carb: "19mm",
+            exhaust: "LeoVinci",
             crank: "Race",
-            gear: "Close ratio",
-            ignition: "PVL"
+            gear: "Short ratio",
+            ignition: "Variable"
           };
         }
-      } else if (model === "PX" || model === "Rally" || model === "Cosa") {
-        // Largeframe logic
-        if (engineCC <= 125) {
+      } else if (engineCC <= 125) {
+        if (use === "City") {
           setup = {
-            cylinder: "DR 177",
-            carb: "20/20",
-            exhaust: "Sito Plus",
-            crank: "Stock",
+            cylinder: "Polini 125",
+            carb: budget === "High" ? "24mm" : "20mm",
+            exhaust: budget === "High" ? "Polini Box" : "Sito Plus",
+            crank: "Long stroke",
             gear: "23/65",
             ignition: "Electronic"
           };
-        } else if (engineCC <= 150) {
+        } else if (use === "Touring") {
+          setup = {
+            cylinder: "DR 177",
+            carb: "20/20",
+            exhaust: "Road",
+            crank: "Touring crank",
+            gear: "23/65",
+            ignition: "Variable"
+          };
+        } else {
+          setup = {
+            cylinder: "Polini 177",
+            carb: "24mm",
+            exhaust: "Racing",
+            crank: "Full circle",
+            gear: "24/63",
+            ignition: "Race"
+          };
+        }
+      } else if (engineCC >= 150) {
+        if (budget === "Low") {
+          setup = {
+            cylinder: "DR 177",
+            carb: "20mm",
+            exhaust: "Sito Plus",
+            crank: "Stock",
+            gear: "22/68",
+            ignition: "Electronic"
+          };
+        } else if (budget === "Medium") {
           setup = {
             cylinder: "Polini 177",
             carb: "24mm",
             exhaust: "Polini Box",
             crank: "Long stroke",
-            gear: "24/63",
+            gear: "23/65",
             ignition: "Variable"
           };
         } else {
@@ -203,20 +228,11 @@
             cylinder: "Malossi 210",
             carb: "30mm",
             exhaust: "BGM BigBox",
-            crank: "60mm",
+            crank: "60mm Race",
             gear: "24/62",
             ignition: "Digital"
           };
         }
-      } else {
-        setup = {
-          cylinder: "Pinasco Classic Kit",
-          carb: "20mm Dell'Orto",
-          exhaust: "Original",
-          crank: "Stock",
-          gear: "Stock",
-          ignition: "Electronic upgrade"
-        };
       }
 
       resultDiv.innerHTML = `
