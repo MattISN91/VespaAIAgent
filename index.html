@@ -1,233 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
   <title>Vespa Tuning Assistant</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: #f2f2f2;
-      margin: 0;
-      padding: 40px;
+      font-family: sans-serif;
+      background: #f0f0f0;
+      padding: 2rem;
+      max-width: 600px;
+      margin: auto;
     }
     h1 {
-      text-align: center;
       color: #2c3e50;
     }
-    .container {
-      max-width: 600px;
-      background: #fff;
-      padding: 20px;
-      border-radius: 8px;
-      margin: 0 auto;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-    label {
+    label, select {
       display: block;
-      margin-top: 15px;
-      font-weight: bold;
+      margin-top: 1rem;
     }
     select, button {
+      padding: 0.5rem;
       width: 100%;
-      padding: 10px;
-      margin-top: 5px;
     }
-    #results {
-      margin-top: 20px;
-      background: #ecf0f1;
-      padding: 15px;
-      border-radius: 5px;
-    }
-    .recommendation {
-      margin-bottom: 10px;
+    #recommendation {
+      margin-top: 2rem;
+      padding: 1rem;
+      background: #fff;
+      border-left: 5px solid #3498db;
     }
   </style>
 </head>
 <body>
+  <h1>Vespa Tuning Assistant</h1>
 
-  <div class="container">
-    <h1>Vespa Tuning Assistant</h1>
+  <label for="vespaModel">Select your Vespa model:</label>
+  <select id="vespaModel">
+    <optgroup label="Largeframe">
+      <option value="PX">PX 80 / 125 / 150 / 200 (1977–1995)</option>
+      <option value="Sprint">Sprint / Sprint Veloce (1965–1979)</option>
+      <option value="Rally">Rally 180 / 200 (1968–1979)</option>
+      <option value="Super">Super 150 (1965–1979)</option>
+      <option value="VBB">VBB 150 (1960–1965)</option>
+      <option value="VBC">VBC Super 150 (1965–1979)</option>
+      <option value="Cosa">Cosa 125 / 150 / 200 (1988–1995)</option>
+    </optgroup>
+    <optgroup label="Smallframe">
+      <option value="V50">V50 (1963–1983)</option>
+      <option value="V90">V90 (1963–1971)</option>
+      <option value="SS90">90 SS Super Sprint (1965–1971)</option>
+      <option value="Primavera">Primavera 125 (1967–1982)</option>
+      <option value="ET3">ET3 Primavera (1976–1983)</option>
+      <option value="PK">PK 50 / 80 / 100 / 125 (1983–1995)</option>
+    </optgroup>
+    <optgroup label="Wideframe">
+      <option value="GS150">GS 150 / 160 (1955–1964)</option>
+      <option value="VB1">VB1 (1957–1959)</option>
+      <option value="VL/VN">VL1–3 / VN1–2 (1955–1960)</option>
+    </optgroup>
+  </select>
 
-    <label for="model">Vespa Model:</label>
-   <select id="vespaModel" class="form-select">
-  <optgroup label="Largeframe">
-    <option value="VBB 150">VBB 150 (1960–1965)</option>
-    <option value="VBC Super 150">VBC Super 150 (1965–1979)</option>
-    <option value="Sprint">Sprint / Sprint Veloce (1965–1979)</option>
-    <option value="Rally">Rally 180 / 200 (1968–1979)</option>
-    <option value="PX">PX 80 / 125 / 150 / 200 (1977–1995)</option>
-    <option value="Cosa">Cosa 125 / 150 / 200 (1988–1995)</option>
-  </optgroup>
-  <optgroup label="Smallframe">
-    <option value="V50">V50 (1963–1983)</option>
-    <option value="V90">V90 (1963–1971)</option>
-    <option value="SS90">90 SS Super Sprint (1965–1971)</option>
-    <option value="Primavera">Primavera 125 (1967–1982)</option>
-    <option value="ET3">ET3 Primavera (1976–1983)</option>
-    <option value="PK">PK 50 / 80 / 100 / 125 (1983–1995)</option>
-  </optgroup>
-  <optgroup label="Wideframe">
-    <option value="GS150">GS 150 / 160 (1955–1964)</option>
-    <option value="VB1">VB1 (1957–1959)</option>
-    <option value="VL/VN">VL1–3 / VN1–2 (1955–1960)</option>
-  </optgroup>
-</select>
+  <label for="vespaUse">What’s your main use?</label>
+  <select id="vespaUse">
+    <option value="Touring">Touring</option>
+    <option value="Sport">Sport / Track</option>
+    <option value="City">Daily / Urban</option>
+  </select>
 
-    <label for="usage">Usage Type:</label>
-    <select id="usage">
-      <option value="touring">Touring / Long Rides</option>
-      <option value="city">City / Daily Commuting</option>
-      <option value="performance">Street Performance</option>
-    </select>
+  <label for="tuningBudget">Select your budget:</label>
+  <select id="tuningBudget">
+    <option value="Low">Low</option>
+    <option value="Medium">Medium</option>
+    <option value="High">High</option>
+  </select>
 
-    <label for="budget">Budget Level:</label>
-    <select id="budget">
-      <option value="low">Low</option>
-      <option value="medium">Medium</option>
-      <option value="high">High</option>
-    </select>
+  <button onclick="getRecommendation()">Get Tuning Recommendation</button>
 
-    <button onclick="generateTuning()">Get Tuning Setup</button>
-
-    <div id="results"></div>
-  </div>
+  <div id="recommendation"></div>
 
   <script>
-    const tuningData = {
-      PX125: {
-        touring: {
-          low: {
-            cylinder: "DR 177cc",
-            carb: "20/20 SI",
-            exhaust: "Sito Plus",
-            gearing: "22/68",
-            ignition: "19° BTDC",
-            plug: "NGK B7HS"
-          },
-          medium: {
-            cylinder: "Polini 177cc",
-            carb: "24/24 SI",
-            exhaust: "SIP Road 2.0",
-            gearing: "23/65",
-            ignition: "18° BTDC",
-            plug: "NGK B8HS"
-          },
-          high: {
-            cylinder: "Malossi Sport 177cc",
-            carb: "28mm PHBH",
-            exhaust: "BGM BigBox Touring",
-            gearing: "24/63",
-            ignition: "Variable ignition @ 24° max",
-            plug: "NGK BR9HS"
-          }
-        },
-        city: {
-          low: {
-            cylinder: "DR 177cc",
-            carb: "20/20 SI",
-            exhaust: "Sito Plus",
-            gearing: "21/68",
-            ignition: "19° BTDC",
-            plug: "NGK B7HS"
-          },
-          medium: {
-            cylinder: "Polini 177cc",
-            carb: "24/24 SI",
-            exhaust: "SIP Road 2.0",
-            gearing: "22/68",
-            ignition: "18° BTDC",
-            plug: "NGK B8HS"
-          },
-          high: {
-            cylinder: "Quattrini M1X 177cc",
-            carb: "30mm Dell’Orto",
-            exhaust: "Racing exhaust (e.g. JL)",
-            gearing: "Short 23/65 with short 4th",
-            ignition: "Digital ignition",
-            plug: "NGK BR9HS"
-          }
-        },
-        performance: {
-          low: {
-            cylinder: "Polini 177cc",
-            carb: "24/24 SI",
-            exhaust: "SIP Road 2.0",
-            gearing: "22/68",
-            ignition: "18° BTDC",
-            plug: "NGK B8HS"
-          },
-          medium: {
-            cylinder: "Malossi Sport 177cc",
-            carb: "28mm PHBH",
-            exhaust: "BGM BigBox",
-            gearing: "23/65",
-            ignition: "Variable ignition",
-            plug: "NGK B9HS"
-          },
-          high: {
-            cylinder: "Quattrini M1XL",
-            carb: "30mm VHSH",
-            exhaust: "Franz or similar racing pipe",
-            gearing: "Short 4th gear, 24/63",
-            ignition: "Kytronik adjustable",
-            plug: "NGK BR10HS"
-          }
-        }
-      },
-      V50: {
-        touring: {
-          low: {
-            cylinder: "DR 75cc",
-            carb: "16/16",
-            exhaust: "Standard",
-            gearing: "Stock",
-            ignition: "Stock",
-            plug: "NGK B6HS"
-          },
-          medium: {
-            cylinder: "Polini 102cc",
-            carb: "19/19",
-            exhaust: "Polini Banana",
-            gearing: "24/72",
-            ignition: "18° BTDC",
-            plug: "NGK B7HS"
-          },
-          high: {
-            cylinder: "Malossi 112cc",
-            carb: "24mm",
-            exhaust: "Simonini",
-            gearing: "27/69",
-            ignition: "Variable",
-            plug: "NGK B8HS"
-          }
-        }
-      }
+    const modelGroups = {
+      Smallframe: ["V50", "V90", "SS90", "Primavera", "ET3", "PK"],
+      Largeframe: ["PX", "Sprint", "Super", "Rally", "Cosa", "VBB", "VBC"],
+      Wideframe: ["GS150", "VB1", "VL/VN"]
     };
 
-    function generateTuning() {
-      const model = document.getElementById("model").value;
-      const usage = document.getElementById("usage").value;
-      const budget = document.getElementById("budget").value;
-      const setup = tuningData[model]?.[usage]?.[budget];
+    function getRecommendation() {
+      const model = document.getElementById("vespaModel").value;
+      const use = document.getElementById("vespaUse").value;
+      const budget = document.getElementById("tuningBudget").value;
+      const resultDiv = document.getElementById("recommendation");
 
-      const results = document.getElementById("results");
-      results.innerHTML = "";
-
-      if (!setup) {
-        results.innerHTML = "<p>Sorry, no tuning setup available for this combination yet.</p>";
-        return;
+      let type = "Unknown";
+      for (const [group, models] of Object.entries(modelGroups)) {
+        if (models.includes(model)) {
+          type = group;
+          break;
+        }
       }
 
-      results.innerHTML = `
-        <h3>Recommended Tuning Setup:</h3>
-        <div class="recommendation"><strong>Cylinder Kit:</strong> ${setup.cylinder}</div>
-        <div class="recommendation"><strong>Carburetor:</strong> ${setup.carb}</div>
-        <div class="recommendation"><strong>Exhaust:</strong> ${setup.exhaust}</div>
-        <div class="recommendation"><strong>Gearing:</strong> ${setup.gearing}</div>
-        <div class="recommendation"><strong>Ignition:</strong> ${setup.ignition}</div>
-        <div class="recommendation"><strong>Spark Plug:</strong> ${setup.plug}</div>
-      `;
+      let result = "";
+
+      if (type === "Smallframe") {
+        if (use === "Touring") {
+          result = (budget === "Low") ? "75cc Polini kit, 16.16 carb, 3.00 gear ratio." :
+                   (budget === "Medium") ? "102cc DR kit, 19mm carb, Polini Banana exhaust." :
+                   "130cc Malossi, 24mm carb, racing clutch, Simonini exhaust.";
+        } else if (use === "Sport") {
+          result = (budget === "Low") ? "85cc DR kit, 19mm carb, racing coil." :
+                   (budget === "Medium") ? "102cc Polini, 4-speed gearbox, expansion exhaust." :
+                   "136cc Malossi, 30mm carb, PVL ignition, Franz or VSP exhaust.";
+        } else {
+          result = "Reliable 75cc kit, electronic ignition, and Sito Plus or original muffler.";
+        }
+      } else if (type === "Largeframe") {
+        if (use === "Touring") {
+          result = (budget === "Low") ? "DR 177 kit, Sito Plus exhaust, stock crank." :
+                   (budget === "Medium") ? "Polini 177, long stroke crank, 24mm carb." :
+                   "Malossi 210 Sport, 30mm carb, MHR crank, BGM BigBox Touring.";
+        } else if (use === "Sport") {
+          result = (budget === "Low") ? "177 Pinasco kit, expansion pipe, lightened flywheel." :
+                   (budget === "Medium") ? "Polini 208, reed intake, 28mm carb, racing clutch." :
+                   "Malossi 221 MHR, 35mm carb, V-Force reeds, JL RH exhaust.";
+        } else {
+          result = "Reliable setup: DR 177, 23/65 gear, 24mm carb, Sito Plus.";
+        }
+      } else if (type === "Wideframe") {
+        result = "Wideframes are less commonly tuned. Consider period-correct upgrades like GS 160 conversion kits, Dell'Orto 20mm carbs, and reinforced clutches.";
+      } else {
+        result = "Model not recognized. Try selecting a listed Vespa.";
+      }
+
+      resultDiv.innerHTML = `<strong>Recommended tuning:</strong><br>${result}`;
     }
   </script>
 </body>
