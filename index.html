@@ -55,7 +55,7 @@
   <h1>Vespa Tuning Assistant</h1>
 
   <label for="vespaModel">Select your Vespa model:</label>
-  <select id="vespaModel">
+  <select id="vespaModel" onchange="updateEngineOptions()">
     <optgroup label="Largeframe">
       <option value="PX">PX</option>
       <option value="Sprint">Sprint</option>
@@ -80,6 +80,11 @@
     </optgroup>
   </select>
 
+  <label for="engineCC">Select engine displacement (cc):</label>
+  <select id="engineCC">
+    <!-- Options will be dynamically populated -->
+  </select>
+
   <label for="vespaUse">Main use:</label>
   <select id="vespaUse">
     <option value="Touring">Touring</option>
@@ -99,183 +104,118 @@
   <div id="recommendation"></div>
 
   <script>
+    const engineOptions = {
+      PX: ["80", "125", "150", "200"],
+      Sprint: ["150"],
+      Rally: ["180", "200"],
+      Super: ["125", "150"],
+      VBB: ["150"],
+      VBC: ["150"],
+      Cosa: ["125", "150", "200"],
+      V50: ["50"],
+      V90: ["90"],
+      SS90: ["90"],
+      Primavera: ["125"],
+      ET3: ["125"],
+      PK: ["50", "75", "125"],
+      GS150: ["150"],
+      VB1: ["150"],
+      "VL/VN": ["125"]
+    };
+
+    function updateEngineOptions() {
+      const model = document.getElementById("vespaModel").value;
+      const ccSelect = document.getElementById("engineCC");
+      ccSelect.innerHTML = "";
+      if (engineOptions[model]) {
+        engineOptions[model].forEach(cc => {
+          const option = document.createElement("option");
+          option.value = cc;
+          option.text = cc + " cc";
+          ccSelect.add(option);
+        });
+      }
+    }
+
+    window.onload = updateEngineOptions;
+
     function getRecommendation() {
       const model = document.getElementById("vespaModel").value;
+      const engineCC = parseInt(document.getElementById("engineCC").value);
       const use = document.getElementById("vespaUse").value;
       const budget = document.getElementById("tuningBudget").value;
       const resultDiv = document.getElementById("recommendation");
 
-      const modelGroups = {
-        Smallframe: ["V50", "V90", "SS90", "Primavera", "ET3", "PK"],
-        Largeframe: ["PX", "Sprint", "Super", "Rally", "Cosa", "VBB", "VBC"],
-        Wideframe: ["GS150", "VB1", "VL/VN"]
-      };
+      let setup = { cylinder: "—", carb: "—", exhaust: "—", crank: "—", gear: "—", ignition: "—" };
 
-      let type = "Unknown";
-      for (const [group, models] of Object.entries(modelGroups)) {
-        if (models.includes(model)) {
-          type = group;
-          break;
-        }
-      }
-
-      let setup = {
-        cylinder: "—",
-        carb: "—",
-        exhaust: "—",
-        crank: "—",
-        gear: "—",
-        ignition: "—"
-      };
-
-      if (type === "Smallframe") {
-        if (use === "Touring") {
-          if (budget === "Low") {
-            setup = {
-              cylinder: "75cc Polini",
-              carb: "16.16",
-              exhaust: "Stock or Sito",
-              crank: "Stock",
-              gear: "3.00 ratio",
-              ignition: "Points"
-            };
-          } else if (budget === "Medium") {
-            setup = {
-              cylinder: "102cc DR",
-              carb: "19mm",
-              exhaust: "Polini Banana",
-              crank: "Stock",
-              gear: "3.00 ratio",
-              ignition: "Electronic"
-            };
-          } else {
-            setup = {
-              cylinder: "130cc Malossi",
-              carb: "24mm",
-              exhaust: "Simonini",
-              crank: "Racing",
-              gear: "Short 4th gear",
-              ignition: "Electronic"
-            };
-          }
-        } else if (use === "Sport") {
-          if (budget === "Low") {
-            setup = {
-              cylinder: "85cc DR",
-              carb: "19mm",
-              exhaust: "LeoVinci",
-              crank: "Stock",
-              gear: "Short 4th",
-              ignition: "Points"
-            };
-          } else if (budget === "Medium") {
-            setup = {
-              cylinder: "102cc Polini",
-              carb: "24mm",
-              exhaust: "Polini Left",
-              crank: "Reinforced",
-              gear: "Short 4th",
-              ignition: "Electronic"
-            };
-          } else {
-            setup = {
-              cylinder: "136cc Malossi",
-              carb: "30mm",
-              exhaust: "Franz or VSP",
-              crank: "Full-circle racing",
-              gear: "Short 4th + reinforced clutch",
-              ignition: "PVL internal rotor"
-            };
-          }
-        } else {
+      if (model.startsWith("V") || model === "PK" || model === "Primavera" || model === "ET3") {
+        // Smallframe logic
+        if (engineCC <= 50) {
           setup = {
             cylinder: "75cc DR",
             carb: "16.16",
             exhaust: "Sito Plus",
             crank: "Stock",
-            gear: "Standard",
+            gear: "3.00 ratio",
             ignition: "Electronic"
           };
-        }
-
-      } else if (type === "Largeframe") {
-        if (use === "Touring") {
-          if (budget === "Low") {
-            setup = {
-              cylinder: "DR 177",
-              carb: "20/20",
-              exhaust: "Sito Plus",
-              crank: "Stock",
-              gear: "23/65",
-              ignition: "Electronic"
-            };
-          } else if (budget === "Medium") {
-            setup = {
-              cylinder: "Polini 177",
-              carb: "24mm",
-              exhaust: "BGM Touring",
-              crank: "Long stroke",
-              gear: "24/63",
-              ignition: "Electronic"
-            };
-          } else {
-            setup = {
-              cylinder: "Malossi 210 Sport",
-              carb: "30mm",
-              exhaust: "BGM BigBox Touring",
-              crank: "60mm long stroke",
-              gear: "24/62",
-              ignition: "Variable (Vape/BGM)"
-            };
-          }
-        } else if (use === "Sport") {
-          if (budget === "Low") {
-            setup = {
-              cylinder: "Pinasco 177",
-              carb: "24mm",
-              exhaust: "Polini Box",
-              crank: "Stock",
-              gear: "Short 4th",
-              ignition: "Electronic"
-            };
-          } else if (budget === "Medium") {
-            setup = {
-              cylinder: "Polini 208",
-              carb: "28mm",
-              exhaust: "Expansion pipe",
-              crank: "Reed intake",
-              gear: "Short 4th",
-              ignition: "Variable"
-            };
-          } else {
-            setup = {
-              cylinder: "Malossi 221 MHR",
-              carb: "35mm",
-              exhaust: "JL RH or similar",
-              crank: "Full circle",
-              gear: "Short 4th + reinforced",
-              ignition: "Digital internal rotor"
-            };
-          }
+        } else if (engineCC <= 90) {
+          setup = {
+            cylinder: "102cc Polini",
+            carb: "19mm",
+            exhaust: "Banana",
+            crank: "Stock",
+            gear: "Short 4th",
+            ignition: "Electronic"
+          };
         } else {
+          setup = {
+            cylinder: "130cc Malossi",
+            carb: "24mm",
+            exhaust: "Simonini",
+            crank: "Race",
+            gear: "Close ratio",
+            ignition: "PVL"
+          };
+        }
+      } else if (model === "PX" || model === "Rally" || model === "Cosa") {
+        // Largeframe logic
+        if (engineCC <= 125) {
           setup = {
             cylinder: "DR 177",
             carb: "20/20",
             exhaust: "Sito Plus",
             crank: "Stock",
-            gear: "Standard",
+            gear: "23/65",
             ignition: "Electronic"
           };
+        } else if (engineCC <= 150) {
+          setup = {
+            cylinder: "Polini 177",
+            carb: "24mm",
+            exhaust: "Polini Box",
+            crank: "Long stroke",
+            gear: "24/63",
+            ignition: "Variable"
+          };
+        } else {
+          setup = {
+            cylinder: "Malossi 210",
+            carb: "30mm",
+            exhaust: "BGM BigBox",
+            crank: "60mm",
+            gear: "24/62",
+            ignition: "Digital"
+          };
         }
-
-      } else if (type === "Wideframe") {
+      } else {
         setup = {
-          cylinder: "GS160 conversion kit",
-          carb: "Dell'Orto 20mm",
-          exhaust: "Stock",
+          cylinder: "Pinasco Classic Kit",
+          carb: "20mm Dell'Orto",
+          exhaust: "Original",
           crank: "Stock",
-          gear: "Original",
-          ignition: "12V electronic (converted)"
+          gear: "Stock",
+          ignition: "Electronic upgrade"
         };
       }
 
