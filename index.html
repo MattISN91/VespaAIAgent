@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Vespa Tuning Assistant</title>
   <style>
     body {
-      font-family: sans-serif;
-      background: #f9f9f9;
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
       padding: 2rem;
-      max-width: 600px;
+      max-width: 700px;
       margin: auto;
+    }
+
+    h1 {
+      color: #2c3e50;
     }
 
     label, select, button {
@@ -20,12 +24,30 @@
       font-size: 1rem;
     }
 
+    button {
+      background-color: #2c3e50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #34495e;
+    }
+
     #recommendation {
       margin-top: 2rem;
+      background: #fff;
       padding: 1rem;
-      background-color: #fff;
-      border-left: 5px solid #0077cc;
-      font-weight: bold;
+      border-left: 4px solid #2c3e50;
+    }
+
+    #recommendation ul {
+      padding-left: 1.2rem;
+    }
+
+    #recommendation li {
+      margin-bottom: 0.4rem;
     }
   </style>
 </head>
@@ -58,36 +80,36 @@
     </optgroup>
   </select>
 
-  <label for="vespaUse">What’s your main use?</label>
+  <label for="vespaUse">Main use:</label>
   <select id="vespaUse">
     <option value="Touring">Touring</option>
     <option value="Sport">Sport / Track</option>
     <option value="City">Daily / Urban</option>
   </select>
 
-  <label for="tuningBudget">Select your budget:</label>
+  <label for="tuningBudget">Your budget:</label>
   <select id="tuningBudget">
     <option value="Low">Low</option>
     <option value="Medium">Medium</option>
     <option value="High">High</option>
   </select>
 
-  <button id="getTuneBtn">Get Tuning Recommendation</button>
+  <button onclick="getRecommendation()">Get Tuning Recommendation</button>
 
   <div id="recommendation"></div>
 
   <script>
-    const modelGroups = {
-      Smallframe: ["V50", "V90", "SS90", "Primavera", "ET3", "PK"],
-      Largeframe: ["PX", "Sprint", "Super", "Rally", "Cosa", "VBB", "VBC"],
-      Wideframe: ["GS150", "VB1", "VL/VN"]
-    };
-
-    document.getElementById('getTuneBtn').addEventListener('click', () => {
+    function getRecommendation() {
       const model = document.getElementById("vespaModel").value;
       const use = document.getElementById("vespaUse").value;
       const budget = document.getElementById("tuningBudget").value;
       const resultDiv = document.getElementById("recommendation");
+
+      const modelGroups = {
+        Smallframe: ["V50", "V90", "SS90", "Primavera", "ET3", "PK"],
+        Largeframe: ["PX", "Sprint", "Super", "Rally", "Cosa", "VBB", "VBC"],
+        Wideframe: ["GS150", "VB1", "VL/VN"]
+      };
 
       let type = "Unknown";
       for (const [group, models] of Object.entries(modelGroups)) {
@@ -97,40 +119,178 @@
         }
       }
 
-      let result = "";
+      let setup = {
+        cylinder: "—",
+        carb: "—",
+        exhaust: "—",
+        crank: "—",
+        gear: "—",
+        ignition: "—"
+      };
 
       if (type === "Smallframe") {
         if (use === "Touring") {
-          result = (budget === "Low") ? "Polini 75cc, 16.16 carb, 3.00 gear." :
-                   (budget === "Medium") ? "DR 102cc, 19 carb, banana exhaust." :
-                   "Malossi 130cc, 24 carb, racing clutch, Simonini pipe.";
+          if (budget === "Low") {
+            setup = {
+              cylinder: "75cc Polini",
+              carb: "16.16",
+              exhaust: "Stock or Sito",
+              crank: "Stock",
+              gear: "3.00 ratio",
+              ignition: "Points"
+            };
+          } else if (budget === "Medium") {
+            setup = {
+              cylinder: "102cc DR",
+              carb: "19mm",
+              exhaust: "Polini Banana",
+              crank: "Stock",
+              gear: "3.00 ratio",
+              ignition: "Electronic"
+            };
+          } else {
+            setup = {
+              cylinder: "130cc Malossi",
+              carb: "24mm",
+              exhaust: "Simonini",
+              crank: "Racing",
+              gear: "Short 4th gear",
+              ignition: "Electronic"
+            };
+          }
         } else if (use === "Sport") {
-          result = (budget === "Low") ? "DR 85cc, 19mm carb, sport pipe." :
-                   (budget === "Medium") ? "Polini 102cc, 4-speed, race exhaust." :
-                   "Malossi 136cc, 30mm carb, PVL ignition, VSP pipe.";
+          if (budget === "Low") {
+            setup = {
+              cylinder: "85cc DR",
+              carb: "19mm",
+              exhaust: "LeoVinci",
+              crank: "Stock",
+              gear: "Short 4th",
+              ignition: "Points"
+            };
+          } else if (budget === "Medium") {
+            setup = {
+              cylinder: "102cc Polini",
+              carb: "24mm",
+              exhaust: "Polini Left",
+              crank: "Reinforced",
+              gear: "Short 4th",
+              ignition: "Electronic"
+            };
+          } else {
+            setup = {
+              cylinder: "136cc Malossi",
+              carb: "30mm",
+              exhaust: "Franz or VSP",
+              crank: "Full-circle racing",
+              gear: "Short 4th + reinforced clutch",
+              ignition: "PVL internal rotor"
+            };
+          }
         } else {
-          result = "Reliable 75cc kit, 16.16 carb, Sito+ exhaust.";
+          setup = {
+            cylinder: "75cc DR",
+            carb: "16.16",
+            exhaust: "Sito Plus",
+            crank: "Stock",
+            gear: "Standard",
+            ignition: "Electronic"
+          };
         }
+
       } else if (type === "Largeframe") {
         if (use === "Touring") {
-          result = (budget === "Low") ? "DR 177 kit, Sito+ exhaust." :
-                   (budget === "Medium") ? "Polini 177, 24 carb, long stroke crank." :
-                   "Malossi 210 Sport, 30 carb, BGM Touring pipe.";
+          if (budget === "Low") {
+            setup = {
+              cylinder: "DR 177",
+              carb: "20/20",
+              exhaust: "Sito Plus",
+              crank: "Stock",
+              gear: "23/65",
+              ignition: "Electronic"
+            };
+          } else if (budget === "Medium") {
+            setup = {
+              cylinder: "Polini 177",
+              carb: "24mm",
+              exhaust: "BGM Touring",
+              crank: "Long stroke",
+              gear: "24/63",
+              ignition: "Electronic"
+            };
+          } else {
+            setup = {
+              cylinder: "Malossi 210 Sport",
+              carb: "30mm",
+              exhaust: "BGM BigBox Touring",
+              crank: "60mm long stroke",
+              gear: "24/62",
+              ignition: "Variable (Vape/BGM)"
+            };
+          }
         } else if (use === "Sport") {
-          result = (budget === "Low") ? "Pinasco 177, sport exhaust, light flywheel." :
-                   (budget === "Medium") ? "Polini 208, 28 carb, race clutch." :
-                   "Malossi 221 MHR, 35 carb, JL RH pipe.";
+          if (budget === "Low") {
+            setup = {
+              cylinder: "Pinasco 177",
+              carb: "24mm",
+              exhaust: "Polini Box",
+              crank: "Stock",
+              gear: "Short 4th",
+              ignition: "Electronic"
+            };
+          } else if (budget === "Medium") {
+            setup = {
+              cylinder: "Polini 208",
+              carb: "28mm",
+              exhaust: "Expansion pipe",
+              crank: "Reed intake",
+              gear: "Short 4th",
+              ignition: "Variable"
+            };
+          } else {
+            setup = {
+              cylinder: "Malossi 221 MHR",
+              carb: "35mm",
+              exhaust: "JL RH or similar",
+              crank: "Full circle",
+              gear: "Short 4th + reinforced",
+              ignition: "Digital internal rotor"
+            };
+          }
         } else {
-          result = "DR 177, 23/65 gears, Sito+ muffler, electronic ignition.";
+          setup = {
+            cylinder: "DR 177",
+            carb: "20/20",
+            exhaust: "Sito Plus",
+            crank: "Stock",
+            gear: "Standard",
+            ignition: "Electronic"
+          };
         }
+
       } else if (type === "Wideframe") {
-        result = "Wideframes: try GS 160 kit, 20mm carb, reinforced clutch.";
-      } else {
-        result = "Model not recognized.";
+        setup = {
+          cylinder: "GS160 conversion kit",
+          carb: "Dell'Orto 20mm",
+          exhaust: "Stock",
+          crank: "Stock",
+          gear: "Original",
+          ignition: "12V electronic (converted)"
+        };
       }
 
-      resultDiv.innerHTML = `<strong>Recommended tuning:</strong><br>${result}`;
-    });
+      resultDiv.innerHTML = `
+        <strong>Recommended tuning setup:</strong>
+        <ul>
+          <li><strong>Cylinder kit:</strong> ${setup.cylinder}</li>
+          <li><strong>Carburetor:</strong> ${setup.carb}</li>
+          <li><strong>Exhaust:</strong> ${setup.exhaust}</li>
+          <li><strong>Crankshaft:</strong> ${setup.crank}</li>
+          <li><strong>Gearing:</strong> ${setup.gear}</li>
+          <li><strong>Ignition:</strong> ${setup.ignition}</li>
+        </ul>
+      `;
+    }
   </script>
 </body>
 </html>
