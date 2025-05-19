@@ -1,35 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Vespa Tuning Advisor</title>
   <style>
-    body { font-family: Arial, sans-serif; padding: 20px; max-width: 800px; margin: auto; }
+    body { font-family: Arial, sans-serif; padding: 20px; max-width: 900px; margin: auto; }
     h1 { color: #2c3e50; }
-    label { font-weight: bold; }
-    select, button { margin: 10px 0; padding: 8px; width: 100%; }
-    .recommendation { margin-top: 20px; background: #ecf0f1; padding: 15px; border-radius: 5px; }
+    label { font-weight: bold; display: block; margin-top: 10px; }
+    select, button { margin: 5px 0 20px 0; padding: 8px; width: 100%; max-width: 400px; }
+    .recommendation { margin-top: 30px; background: #ecf0f1; padding: 15px; border-radius: 5px; }
+    ul { list-style-type: none; padding: 0; }
+    li { margin: 8px 0; }
     a { color: #2980b9; text-decoration: none; }
     a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
   <h1>Vespa Tuning Advisor</h1>
-  <label for="vespaModel">Vespa Model:</label>
+
+  <label for="vespaModel">Vespa Model (1960-1995):</label>
   <select id="vespaModel">
+    <option value="V50">V50</option>
+    <option value="Primavera">Primavera</option>
+    <option value="ET3">ET3</option>
+    <option value="PK50">PK50</option>
+    <option value="PK125">PK125</option>
     <option value="PX80">PX80</option>
     <option value="PX125">PX125</option>
     <option value="PX150">PX150</option>
     <option value="PX200">PX200</option>
-    <option value="V50">V50</option>
-    <option value="ET3">ET3</option>
-    <option value="Primavera">Primavera</option>
     <option value="Rally180">Rally 180</option>
     <option value="Rally200">Rally 200</option>
+    <option value="Sprint">Sprint</option>
+    <option value="Super">Super</option>
+    <option value="GS160">GS 160</option>
+    <option value="SS180">SS 180</option>
   </select>
 
-  <label for="engineCC">Engine Displacement (cc):</label>
+  <label for="engineCC">Cylinder Size (cc):</label>
   <select id="engineCC">
     <option value="50">50</option>
     <option value="80">80</option>
@@ -44,7 +53,7 @@
   <select id="vespaUse">
     <option value="City">City</option>
     <option value="Touring">Touring</option>
-    <option value="Performance">Performance</option>
+    <option value="Racing">Racing</option>
   </select>
 
   <label for="tuningBudget">Tuning Budget:</label>
@@ -55,6 +64,7 @@
   </select>
 
   <button onclick="getRecommendation()">Get Tuning Recommendation</button>
+
   <div id="recommendation" class="recommendation"></div>
 
   <script>
@@ -63,38 +73,50 @@
       const cc = parseInt(document.getElementById("engineCC").value);
       const use = document.getElementById("vespaUse").value;
       const budget = document.getElementById("tuningBudget").value;
-
       const resultDiv = document.getElementById("recommendation");
-      let cylinder = "";
-      let carb = "";
-      let exhaust = "";
-      let crank = "";
-      let gear = "";
-      let ignition = "";
 
-      // Example rule logic for demonstration only:
-      if (cc <= 50) {
-        if (budget === "Low") {
-          cylinder = '<a href="https://www.sip-scootershop.com/en/product/racing-cylinder-dr-65-cc_10006000" target="_blank">DR 65cc</a>';
-          carb = '<a href="https://www.sip-scootershop.com/en/product/carburettor-dell-orto-shb-1610_41000000" target="_blank">SHB 16/10</a>';
-          exhaust = 'Stock';
-          crank = 'Stock';
-          gear = 'Stock';
-          ignition = 'Points';
-        } else {
-          cylinder = '<a href="https://www.sip-scootershop.com/en/product/racing-cylinder-polini-75-cc_14000500" target="_blank">Polini 75cc</a>';
-          carb = '<a href="https://www.sip-scootershop.com/en/product/carburettor-dell-orto-shb-1616_41000100" target="_blank">SHB 16/16</a>';
-          exhaust = '<a href="https://www.sip-scootershop.com/en/product/racing-exhaust-sito-plus_40301000" target="_blank">Sito Plus</a>';
-          crank = 'Stock';
-          gear = 'Short 4th';
-          ignition = '<a href="https://www.sip-scootershop.com/en/product/ignition-sip-performance-by-vape_51000000" target="_blank">Electronic</a>';
-        }
+      // Sample logic - expand with more specific tuning setups
+      let setup = {
+        cylinder: "Stock",
+        carburetor: "Stock",
+        exhaust: "Stock",
+        crankshaft: "Stock",
+        gearing: "Stock",
+        ignition: "Stock"
+      };
+
+      if (cc === 50) {
+        setup.cylinder = '<a href="https://www.sip-scootershop.com/en/product/racing-cylinder-polini-75-cc_14000500" target="_blank">Polini 75cc</a>';
+        setup.carburetor = '<a href="https://www.sip-scootershop.com/en/product/carburettor-dell-orto-shb-1616_41000100" target="_blank">Dell'Orto SHB 16/16</a>';
+        setup.exhaust = '<a href="https://www.sip-scootershop.com/en/product/racing-exhaust-sito-plus_40301000" target="_blank">Sito Plus</a>';
       } else if (cc === 125 && use === "Touring") {
-        cylinder = '<a href="https://www.sip-scootershop.com/en/product/racing-cylinder-dr-177-cc_10001000" target="_blank">DR 177</a>';
-        carb = '<a href="https://www.sip-scootershop.com/en/product/carburettor-dell-orto-si-2020d_40000100" target="_blank">SI 20/20</a>';
-        exhaust = '<a href="https://www.sip-scootershop.com/en/product/racing-exhaust-sip-road-xl_24164000" target="_blank">SIP Road XL</a>';
-        crank = 'Touring crank';
-        gear = '23/65';
-        ignition = '<a href="https://www.sip-scootershop.com/en/product/ignition-sip-performance-by-vape-variable_51000100" target="_blank">Variable</a>';
+        setup.cylinder = '<a href="https://www.sip-scootershop.com/en/product/racing-cylinder-dr-177-cc_10001000" target="_blank">DR 177cc</a>';
+        setup.carburetor = '<a href="https://www.sip-scootershop.com/en/product/carburettor-dell-orto-si-2020d_40000100" target="_blank">Dell'Orto SI 20/20</a>';
+        setup.exhaust = '<a href="https://www.sip-scootershop.com/en/product/racing-exhaust-sip-road-xl_24164000" target="_blank">SIP Road XL</a>';
+        setup.crankshaft = 'Touring crank';
+        setup.gearing = '23/65';
+        setup.ignition = '<a href="https://www.sip-scootershop.com/en/product/ignition-sip-performance-by-vape-variable_51000100" target="_blank">Vape Variable</a>';
       } else if (cc >= 150 && budget === "High") {
-        cylinder = '<a href="https://
+        setup.cylinder = '<a href="https://www.sip-scootershop.com/en/product/racing-cylinder-polini-177-cc_14000800" target="_blank">Polini 177cc</a>';
+        setup.carburetor = '<a href="https://www.sip-scootershop.com/en/product/carburettor-dell-orto-si-2424e_40000000" target="_blank">Dell'Orto SI 24/24</a>';
+        setup.exhaust = '<a href="https://www.sip-scootershop.com/en/product/racing-exhaust-polini-box_20020200" target="_blank">Polini Box</a>';
+        setup.crankshaft = 'Long stroke crank';
+        setup.gearing = '24/63';
+        setup.ignition = '<a href="https://www.sip-scootershop.com/en/product/ignition-sip-performance-by-vape-sport_51007SA0" target="_blank">Vape Sport</a>';
+      }
+
+      resultDiv.innerHTML = `
+        <h2>Recommended Setup for ${model} (${cc}cc)</h2>
+        <ul>
+          <li><strong>Cylinder Kit:</strong> ${setup.cylinder}</li>
+          <li><strong>Carburetor:</strong> ${setup.carburetor}</li>
+          <li><strong>Exhaust:</strong> ${setup.exhaust}</li>
+          <li><strong>Crankshaft:</strong> ${setup.crankshaft}</li>
+          <li><strong>Gearing:</strong> ${setup.gearing}</li>
+          <li><strong>Ignition:</strong> ${setup.ignition}</li>
+        </ul>
+      `;
+    }
+  </script>
+</body>
+</html>
