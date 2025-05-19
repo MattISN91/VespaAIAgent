@@ -50,10 +50,29 @@
     <h1>Vespa Tuning Assistant</h1>
 
     <label for="model">Vespa Model:</label>
-    <select id="model">
-      <option value="PX125">PX125</option>
-      <option value="V50">V50 Special</option>
-    </select>
+   <select id="vespaModel" class="form-select">
+  <optgroup label="Largeframe">
+    <option value="VBB 150">VBB 150 (1960–1965)</option>
+    <option value="VBC Super 150">VBC Super 150 (1965–1979)</option>
+    <option value="Sprint">Sprint / Sprint Veloce (1965–1979)</option>
+    <option value="Rally">Rally 180 / 200 (1968–1979)</option>
+    <option value="PX">PX 80 / 125 / 150 / 200 (1977–1995)</option>
+    <option value="Cosa">Cosa 125 / 150 / 200 (1988–1995)</option>
+  </optgroup>
+  <optgroup label="Smallframe">
+    <option value="V50">V50 (1963–1983)</option>
+    <option value="V90">V90 (1963–1971)</option>
+    <option value="SS90">90 SS Super Sprint (1965–1971)</option>
+    <option value="Primavera">Primavera 125 (1967–1982)</option>
+    <option value="ET3">ET3 Primavera (1976–1983)</option>
+    <option value="PK">PK 50 / 80 / 100 / 125 (1983–1995)</option>
+  </optgroup>
+  <optgroup label="Wideframe">
+    <option value="GS150">GS 150 / 160 (1955–1964)</option>
+    <option value="VB1">VB1 (1957–1959)</option>
+    <option value="VL/VN">VL1–3 / VN1–2 (1955–1960)</option>
+  </optgroup>
+</select>
 
     <label for="usage">Usage Type:</label>
     <select id="usage">
