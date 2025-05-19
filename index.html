@@ -75,7 +75,6 @@
       const budget = document.getElementById("tuningBudget").value;
       const resultDiv = document.getElementById("recommendation");
 
-      // Sample logic - expand with more specific tuning setups
       let setup = {
         cylinder: "Stock",
         carburetor: "Stock",
@@ -89,19 +88,36 @@
         setup.cylinder = '<a href="https://www.sip-scootershop.com/en/product/racing-cylinder-polini-75-cc_14000500" target="_blank">Polini 75cc</a>';
         setup.carburetor = '<a href="https://www.sip-scootershop.com/en/product/carburettor-dell-orto-shb-1616_41000100" target="_blank">Dell'Orto SHB 16/16</a>';
         setup.exhaust = '<a href="https://www.sip-scootershop.com/en/product/racing-exhaust-sito-plus_40301000" target="_blank">Sito Plus</a>';
-      } else if (cc === 125 && use === "Touring") {
-        setup.cylinder = '<a href="https://www.sip-scootershop.com/en/product/racing-cylinder-dr-177-cc_10001000" target="_blank">DR 177cc</a>';
-        setup.carburetor = '<a href="https://www.sip-scootershop.com/en/product/carburettor-dell-orto-si-2020d_40000100" target="_blank">Dell'Orto SI 20/20</a>';
-        setup.exhaust = '<a href="https://www.sip-scootershop.com/en/product/racing-exhaust-sip-road-xl_24164000" target="_blank">SIP Road XL</a>';
-        setup.crankshaft = 'Touring crank';
+      } else if (cc === 80 || cc === 100) {
+        setup.cylinder = '<a href="https://www.sip-scootershop.com/en/product/racing-cylinder-dr-135cc_10005000" target="_blank">DR 135cc</a>';
+        setup.carburetor = '<a href="https://www.sip-scootershop.com/en/product/carburettor-dell-orto-si-2020_40000100" target="_blank">SI 20/20</a>';
+        setup.exhaust = '<a href="https://www.sip-scootershop.com/en/product/performance-exhaust-sip-road_24166000" target="_blank">SIP Road</a>';
+      } else if (cc === 125) {
+        if (use === "Touring") {
+          setup.cylinder = '<a href="https://www.sip-scootershop.com/en/product/racing-cylinder-dr-177-cc_10001000" target="_blank">DR 177cc</a>';
+          setup.carburetor = '<a href="https://www.sip-scootershop.com/en/product/carburettor-dell-orto-si-2020d_40000100" target="_blank">SI 20/20</a>';
+          setup.exhaust = '<a href="https://www.sip-scootershop.com/en/product/racing-exhaust-sip-road-xl_24164000" target="_blank">SIP Road XL</a>';
+        } else {
+          setup.cylinder = '<a href="https://www.sip-scootershop.com/en/product/racing-cylinder-polini-177-cc_14000800" target="_blank">Polini 177cc</a>';
+          setup.carburetor = '<a href="https://www.sip-scootershop.com/en/product/carburettor-dell-orto-si-2424e_40000000" target="_blank">SI 24/24</a>';
+          setup.exhaust = '<a href="https://www.sip-scootershop.com/en/product/racing-exhaust-polini-box_20020200" target="_blank">Polini Box</a>';
+        }
+        setup.crankshaft = 'Long stroke crank';
         setup.gearing = '23/65';
         setup.ignition = '<a href="https://www.sip-scootershop.com/en/product/ignition-sip-performance-by-vape-variable_51000100" target="_blank">Vape Variable</a>';
-      } else if (cc >= 150 && budget === "High") {
-        setup.cylinder = '<a href="https://www.sip-scootershop.com/en/product/racing-cylinder-polini-177-cc_14000800" target="_blank">Polini 177cc</a>';
-        setup.carburetor = '<a href="https://www.sip-scootershop.com/en/product/carburettor-dell-orto-si-2424e_40000000" target="_blank">Dell'Orto SI 24/24</a>';
-        setup.exhaust = '<a href="https://www.sip-scootershop.com/en/product/racing-exhaust-polini-box_20020200" target="_blank">Polini Box</a>';
-        setup.crankshaft = 'Long stroke crank';
+      } else if (cc === 150 || cc === 177) {
+        setup.cylinder = '<a href="https://www.sip-scootershop.com/en/product/cylinder-kit-bgm-pro-177cc_17700000" target="_blank">BGM PRO 177cc</a>';
+        setup.carburetor = '<a href="https://www.sip-scootershop.com/en/product/carburettor-dell-orto-si-2424g_40000200" target="_blank">SI 24/24G</a>';
+        setup.exhaust = '<a href="https://www.sip-scootershop.com/en/product/exhaust-sip-road-3-0_24166000" target="_blank">SIP Road 3.0</a>';
+        setup.crankshaft = 'High performance crank';
         setup.gearing = '24/63';
+        setup.ignition = '<a href="https://www.sip-scootershop.com/en/product/ignition-vape-sport_51007SA0" target="_blank">Vape Sport</a>';
+      } else if (cc === 200) {
+        setup.cylinder = '<a href="https://www.sip-scootershop.com/en/product/racing-cylinder-malp-210cc_10006000" target="_blank">Malossi 210cc</a>';
+        setup.carburetor = '<a href="https://www.sip-scootershop.com/en/product/carburettor-dell-orto-px-3026_40000300" target="_blank">Dell'Orto 26/26</a>';
+        setup.exhaust = '<a href="https://www.sip-scootershop.com/en/product/racing-exhaust-sip-road-xl_24164000" target="_blank">SIP Road XL</a>';
+        setup.crankshaft = 'Racing crank';
+        setup.gearing = 'T5 Gearing';
         setup.ignition = '<a href="https://www.sip-scootershop.com/en/product/ignition-sip-performance-by-vape-sport_51007SA0" target="_blank">Vape Sport</a>';
       }
 
