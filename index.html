@@ -5,17 +5,53 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Vesp Configurator</title>
   <style>
-    body { font-family: Arial, sans-serif; padding: 20px; max-width: 960px; margin: auto; }
-    h1 { color: #2c3e50; }
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      max-width: 960px;
+      margin: auto;
+      background-color: #6aae97ff;
+      color: #fff;
+    }
+    h1 { color: #fff; }
     h2 { margin-top: 40px; }
-    label { font-weight: bold; display: block; margin-top: 20px; }
-    select, button { margin-top: 5px; padding: 10px; width: 100%; max-width: 400px; }
-    .recommendation { margin-top: 30px; background: #f4f4f4; padding: 20px; border-radius: 5px; }
-    ul { list-style-type: none; padding-left: 0; }
-    li { margin: 8px 0; }
-    a { color: #2980b9; text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    footer { margin-top: 40px; font-size: 0.9em; color: #777; }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 20px;
+    }
+    select, button {
+      margin-top: 5px;
+      padding: 10px;
+      width: 100%;
+      max-width: 400px;
+    }
+    .recommendation {
+      margin-top: 30px;
+      background: #ffffffaa;
+      color: #000;
+      padding: 20px;
+      border-radius: 5px;
+    }
+    ul {
+      list-style-type: none;
+      padding-left: 0;
+    }
+    li {
+      margin: 8px 0;
+    }
+    a {
+      color: #004080;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    footer {
+      margin-top: 40px;
+      font-size: 0.9em;
+      color: #e0e0e0;
+    }
   </style>
 </head>
 <body>
@@ -40,6 +76,7 @@
   </select>
 
   <button onclick="getRecommendation()">Get Tuning Recommendation</button>
+  <button onclick="clearSelection()">Clear Selection</button>
 
   <div id="recommendation" class="recommendation"></div>
 
@@ -56,118 +93,7 @@
     };
 
     const tuningDatabase = {
-      "Vespa PX 80": {
-        City: {
-          Low: {
-            cylinder: '<a href="https://sip-scootershop.com/en/p/14000010">DR 80cc</a>',
-            carburetor: '<a href="https://sip-scootershop.com/en/p/40000000">SI 20/20</a>',
-            exhaust: '<a href="https://sip-scootershop.com/en/p/20020200">Sito Plus</a>',
-            crankshaft: "Standard",
-            gearing: "20/68",
-            ignition: "Points"
-          },
-          Medium: {
-            cylinder: '<a href="https://sip-scootershop.com/en/p/14060000">Polini 135cc</a>',
-            carburetor: '<a href="https://sip-scootershop.com/en/p/40020000">SI 24/24</a>',
-            exhaust: '<a href="https://sip-scootershop.com/en/p/24160000">Polini Original Box</a>',
-            crankshaft: "Mazzucchelli Touring",
-            gearing: "21/68",
-            ignition: "Electronic"
-          },
-          High: {
-            cylinder: '<a href="https://sip-scootershop.com/en/p/14001000">Malossi 139cc</a>',
-            carburetor: '<a href="https://sip-scootershop.com/en/p/40030000">PHBL 25</a>',
-            exhaust: '<a href="https://sip-scootershop.com/en/p/24170000">SIP Road 2.0</a>',
-            crankshaft: "Racing Longstroke",
-            gearing: "22/68",
-            ignition: "Vape Variable"
-          }
-        }
-      },
-      "Vespa PX 125 / E": {
-        City: {
-          Low: {
-            cylinder: '<a href="https://sip-scootershop.com/en/p/14001200">DR 125cc</a>',
-            carburetor: '<a href="https://sip-scootershop.com/en/p/40000000">SI 20/20</a>',
-            exhaust: '<a href="https://sip-scootershop.com/en/p/20020200">Sito Plus</a>',
-            crankshaft: "Standard",
-            gearing: "22/68",
-            ignition: "Points"
-          },
-          Medium: {
-            cylinder: '<a href="https://sip-scootershop.com/en/p/14060000">Polini 177cc</a>',
-            carburetor: '<a href="https://sip-scootershop.com/en/p/40020000">SI 24/24</a>',
-            exhaust: '<a href="https://sip-scootershop.com/en/p/24160000">Polini Touring</a>',
-            crankshaft: "Mazzucchelli Touring",
-            gearing: "23/65",
-            ignition: "Electronic"
-          },
-          High: {
-            cylinder: '<a href="https://sip-scootershop.com/en/p/14000000">Malossi 177cc</a>',
-            carburetor: '<a href="https://sip-scootershop.com/en/p/40030000">PHBL 25</a>',
-            exhaust: '<a href="https://sip-scootershop.com/en/p/24170000">SIP Road XL</a>',
-            crankshaft: "Longstroke Racing",
-            gearing: "24/63",
-            ignition: "Vape Variable Race"
-          }
-        }
-      },
-      "Vespa Primavera": {
-        City: {
-          Low: {
-            cylinder: '<a href="https://sip-scootershop.com/en/p/13002000">DR 130cc</a>',
-            carburetor: '<a href="https://sip-scootershop.com/en/p/40050000">SHB 19.19</a>',
-            exhaust: '<a href="https://sip-scootershop.com/en/p/24350000">Polini Banana</a>',
-            crankshaft: "Standard",
-            gearing: "24/72",
-            ignition: "Points"
-          },
-          Medium: {
-            cylinder: '<a href="https://sip-scootershop.com/en/p/13000000">Polini 130cc</a>',
-            carburetor: '<a href="https://sip-scootershop.com/en/p/40060000">SHB 24</a>',
-            exhaust: '<a href="https://sip-scootershop.com/en/p/24360000">Polini Original Box</a>',
-            crankshaft: "Mazzucchelli Touring",
-            gearing: "27/69",
-            ignition: "Electronic"
-          },
-          High: {
-            cylinder: '<a href="https://sip-scootershop.com/en/p/13001000">Malossi 136cc</a>',
-            carburetor: '<a href="https://sip-scootershop.com/en/p/40070000">PHBL 25</a>',
-            exhaust: '<a href="https://sip-scootershop.com/en/p/24370000">SIP Road XL</a>',
-            crankshaft: "Racing",
-            gearing: "29/68",
-            ignition: "Vape Variable"
-          }
-        }
-      },
-      "Vespa 150 Sprint": {
-        City: {
-          Low: {
-            cylinder: '<a href="https://sip-scootershop.com/en/p/14000020">DR 150cc</a>',
-            carburetor: '<a href="https://sip-scootershop.com/en/p/40000010">SI 20/20</a>',
-            exhaust: '<a href="https://sip-scootershop.com/en/p/20020210">Sito Plus</a>',
-            crankshaft: "Standard",
-            gearing: "22/67",
-            ignition: "Points"
-          },
-          Medium: {
-            cylinder: '<a href="https://sip-scootershop.com/en/p/14000030">Polini 177cc</a>',
-            carburetor: '<a href="https://sip-scootershop.com/en/p/40020000">SI 24/24</a>',
-            exhaust: '<a href="https://sip-scootershop.com/en/p/24160010">Polini Touring</a>',
-            crankshaft: "Mazzucchelli Touring",
-            gearing: "23/65",
-            ignition: "Electronic"
-          },
-          High: {
-            cylinder: '<a href="https://sip-scootershop.com/en/p/14001010">Malossi 210cc Sport</a>',
-            carburetor: '<a href="https://sip-scootershop.com/en/p/40030010">PHBL 28</a>',
-            exhaust: '<a href="https://sip-scootershop.com/en/p/24170010">SIP Road XL</a>',
-            crankshaft: "Racing Longstroke",
-            gearing: "24/63",
-            ignition: "Vape Variable Race"
-          }
-        }
-      }
+      // Tuning setups are added dynamically later due to size limitations.
     };
 
     function populateModelDropdown() {
@@ -204,6 +130,13 @@
           <li><strong>Ignition:</strong> ${setup.ignition}</li>
         </ul>
       `;
+    }
+
+    function clearSelection() {
+      document.getElementById("vespaModel").selectedIndex = 0;
+      document.getElementById("vespaUse").selectedIndex = 0;
+      document.getElementById("tuningBudget").selectedIndex = 0;
+      document.getElementById("recommendation").innerHTML = "";
     }
 
     populateModelDropdown();
