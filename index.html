@@ -73,27 +73,36 @@
       };
 
       if (model === "V50" && use === "City" && budget === "Low") {
-        setup.cylinder = '<a href="https://www.sip-scootershop.com/en/product/racing-cylinder-polini-75-cc_14000500" target="_blank">Polini 75cc</a>';
-        setup.carburetor = '<a href="https://www.sip-scootershop.com/en/product/carburettor-dell-orto-shb-1616_41000100" target="_blank">Dell'Orto SHB 16/16</a>';
-        setup.exhaust = '<a href="https://www.sip-scootershop.com/en/product/racing-exhaust-sito-plus_40301000" target="_blank">Sito Plus</a>';
+        setup = {
+          cylinder: '<a href="https://www.sip-scootershop.com/en/product/racing-cylinder-polini-75-cc_14000500" target="_blank">Polini 75cc</a>',
+          carburetor: '<a href="https://www.sip-scootershop.com/en/product/carburettor-dell-orto-shb-1616_41000100" target="_blank">Dell\'Orto SHB 16/16</a>',
+          exhaust: '<a href="https://www.sip-scootershop.com/en/product/racing-exhaust-sito-plus_40301000" target="_blank">Sito Plus</a>',
+          crankshaft: "Standard",
+          gearing: "18/67",
+          ignition: "Points"
+        };
       } else if (model === "PX125" && use === "Touring" && budget === "Medium") {
-        setup.cylinder = '<a href="https://www.sip-scootershop.com/en/product/racing-cylinder-dr-177-cc_10001000" target="_blank">DR 177cc</a>';
-        setup.carburetor = '<a href="https://www.sip-scootershop.com/en/product/carburettor-dell-orto-si-2020d_40000100" target="_blank">Dell'Orto SI 20/20</a>';
-        setup.exhaust = '<a href="https://www.sip-scootershop.com/en/product/racing-exhaust-sip-road-xl_24164000" target="_blank">SIP Road XL</a>';
-        setup.crankshaft = 'Touring crank';
-        setup.gearing = '23/65';
-        setup.ignition = '<a href="https://www.sip-scootershop.com/en/product/ignition-sip-performance-by-vape-variable_51000100" target="_blank">Vape Variable</a>';
+        setup = {
+          cylinder: '<a href="https://www.sip-scootershop.com/en/product/racing-cylinder-dr-177-cc_10001000" target="_blank">DR 177cc</a>',
+          carburetor: '<a href="https://www.sip-scootershop.com/en/product/carburettor-dell-orto-si-2020d_40000100" target="_blank">Dell\'Orto SI 20/20</a>',
+          exhaust: '<a href="https://www.sip-scootershop.com/en/product/racing-exhaust-sip-road-xl_24164000" target="_blank">SIP Road XL</a>',
+          crankshaft: "Touring crank",
+          gearing: "23/65",
+          ignition: '<a href="https://www.sip-scootershop.com/en/product/ignition-sip-performance-by-vape-variable_51000100" target="_blank">Vape Variable</a>'
+        };
       } else if (budget === "High") {
-        setup.cylinder = '<a href="https://www.sip-scootershop.com/en/product/racing-cylinder-polini-177-cc_14000800" target="_blank">Polini 177cc</a>';
-        setup.carburetor = '<a href="https://www.sip-scootershop.com/en/product/carburettor-dell-orto-si-2424e_40000000" target="_blank">Dell'Orto SI 24/24</a>';
-        setup.exhaust = '<a href="https://www.sip-scootershop.com/en/product/racing-exhaust-polini-box_20020200" target="_blank">Polini Box</a>';
-        setup.crankshaft = 'Long stroke crank';
-        setup.gearing = '24/63';
-        setup.ignition = '<a href="https://www.sip-scootershop.com/en/product/ignition-sip-performance-by-vape-sport_51007SA0" target="_blank">Vape Sport</a>';
+        setup = {
+          cylinder: '<a href="https://www.sip-scootershop.com/en/product/racing-cylinder-polini-177-cc_14000800" target="_blank">Polini 177cc</a>',
+          carburetor: '<a href="https://www.sip-scootershop.com/en/product/carburettor-dell-orto-si-2424e_40000000" target="_blank">Dell\'Orto SI 24/24</a>',
+          exhaust: '<a href="https://www.sip-scootershop.com/en/product/racing-exhaust-polini-box_20020200" target="_blank">Polini Box</a>',
+          crankshaft: "Long stroke crank",
+          gearing: "24/63",
+          ignition: '<a href="https://www.sip-scootershop.com/en/product/ignition-sip-performance-by-vape-sport_51007SA0" target="_blank">Vape Sport</a>'
+        };
       }
 
       resultDiv.innerHTML = `
-        <h2>Recommended Setup for ${model}</h2>
+        <h2>Recommended Setup for ${model} (${use}, ${budget})</h2>
         <ul>
           <li><strong>Cylinder Kit:</strong> ${setup.cylinder}</li>
           <li><strong>Carburetor:</strong> ${setup.carburetor}</li>
