@@ -22,36 +22,6 @@
   <label for="vespaModel">Vespa Model (1960–1995):</label>
   <select id="vespaModel">
     <option value="Vespa 50 (V5A1)">Vespa 50 (V5A1)</option>
-    <option value="Vespa 50 Special">Vespa 50 Special</option>
-    <option value="Vespa 50 Elestart">Vespa 50 Elestart</option>
-    <option value="Vespa 50 L/N/R">Vespa 50 L/N/R</option>
-    <option value="Vespa 90">Vespa 90</option>
-    <option value="Vespa 90 Racer">Vespa 90 Racer</option>
-    <option value="Vespa 100">Vespa 100</option>
-    <option value="Vespa 100 Sport">Vespa 100 Sport</option>
-    <option value="Vespa Primavera 125">Vespa Primavera 125</option>
-    <option value="Vespa Primavera ET3">Vespa Primavera ET3</option>
-    <option value="Vespa PK 50">Vespa PK 50</option>
-    <option value="Vespa PK 50 XL">Vespa PK 50 XL</option>
-    <option value="Vespa PK 80">Vespa PK 80</option>
-    <option value="Vespa PK 100">Vespa PK 100</option>
-    <option value="Vespa PK 125 / S">Vespa PK 125 / S</option>
-    <option value="Vespa 125 VNB">Vespa 125 VNB</option>
-    <option value="Vespa 125 GT">Vespa 125 GT</option>
-    <option value="Vespa 125 GTR">Vespa 125 GTR</option>
-    <option value="Vespa 125 Super">Vespa 125 Super</option>
-    <option value="Vespa 125 TS">Vespa 125 TS</option>
-    <option value="Vespa 150 VBA/VBB">Vespa 150 VBA/VBB</option>
-    <option value="Vespa 150 GL">Vespa 150 GL</option>
-    <option value="Vespa 150 Sprint">Vespa 150 Sprint</option>
-    <option value="Vespa 150 Super">Vespa 150 Super</option>
-    <option value="Vespa 160 GS">Vespa 160 GS</option>
-    <option value="Vespa 180 SS">Vespa 180 SS</option>
-    <option value="Vespa 180 Rally">Vespa 180 Rally</option>
-    <option value="Vespa 200 Rally">Vespa 200 Rally</option>
-    <option value="Vespa PX 80">Vespa PX 80</option>
-    <option value="Vespa PX 125 / E">Vespa PX 125 / E</option>
-    <option value="Vespa PX 150 / E">Vespa PX 150 / E</option>
     <option value="Vespa PX 200 / E">Vespa PX 200 / E</option>
   </select>
 
@@ -85,11 +55,54 @@
             gearing: "18/67",
             ignition: "Points"
           },
-          Medium: { /* more tuned parts */ },
-          High: { /* race setup */ }
+          Medium: {
+            cylinder: '<a href="https://sip-scootershop.com/en/p/14000700" target="_blank">DR 85cc</a>',
+            carburetor: '<a href="https://sip-scootershop.com/en/p/41000200" target="_blank">SHB 19/19</a>',
+            exhaust: '<a href="https://sip-scootershop.com/en/p/40302000" target="_blank">Polini Banana</a>',
+            crankshaft: "Racing",
+            gearing: "19/68",
+            ignition: "Points"
+          },
+          High: {
+            cylinder: '<a href="https://sip-scootershop.com/en/p/14001000" target="_blank">Malossi 112cc</a>',
+            carburetor: '<a href="https://sip-scootershop.com/en/p/41000300" target="_blank">PHBG 21</a>',
+            exhaust: '<a href="https://sip-scootershop.com/en/p/40303000" target="_blank">VSP Road</a>',
+            crankshaft: "Full circle",
+            gearing: "24/72",
+            ignition: '<a href="https://sip-scootershop.com/en/p/51000200" target="_blank">Vape Variable</a>'
+          }
         },
-        Touring: { Low: {}, Medium: {}, High: {} },
-        Racing: { Low: {}, Medium: {}, High: {} }
+        Touring: {
+          Low: {
+            cylinder: '<a href="https://sip-scootershop.com/en/p/14000600" target="_blank">DR 75cc</a>',
+            carburetor: '<a href="https://sip-scootershop.com/en/p/41000100" target="_blank">SHB 16/16</a>',
+            exhaust: '<a href="https://sip-scootershop.com/en/p/40301000" target="_blank">Sito Plus</a>',
+            crankshaft: "Standard",
+            gearing: "18/67",
+            ignition: "Points"
+          },
+          Medium: {
+            cylinder: '<a href="https://sip-scootershop.com/en/p/14000800" target="_blank">Polini 102cc</a>',
+            carburetor: '<a href="https://sip-scootershop.com/en/p/41000200" target="_blank">SHB 19/19</a>',
+            exhaust: '<a href="https://sip-scootershop.com/en/p/40302000" target="_blank">Polini Banana</a>',
+            crankshaft: "Racing",
+            gearing: "21/76",
+            ignition: "Points"
+          },
+          High: {
+            cylinder: '<a href="https://sip-scootershop.com/en/p/14001000" target="_blank">Malossi 112cc</a>',
+            carburetor: '<a href="https://sip-scootershop.com/en/p/41000300" target="_blank">PHBG 21</a>',
+            exhaust: '<a href="https://sip-scootershop.com/en/p/40303000" target="_blank">VSP Road</a>',
+            crankshaft: "Full circle",
+            gearing: "24/72",
+            ignition: '<a href="https://sip-scootershop.com/en/p/51000200" target="_blank">Vape Variable</a>'
+          }
+        },
+        Racing: {
+          Low: {},
+          Medium: {},
+          High: {}
+        }
       },
       "Vespa PX 200 / E": {
         City: {
@@ -101,13 +114,55 @@
             gearing: "Cosa 23/65",
             ignition: '<a href="https://sip-scootershop.com/en/p/51000100" target="_blank">Vape Variable</a>'
           },
+          Medium: {
+            cylinder: '<a href="https://sip-scootershop.com/en/p/14001000" target="_blank">Malossi Sport 210</a>',
+            carburetor: '<a href="https://sip-scootershop.com/en/p/40000100" target="_blank">SI 26/26</a>',
+            exhaust: '<a href="https://sip-scootershop.com/en/p/20020300" target="_blank">Sip Road 2.0</a>',
+            crankshaft: "Long stroke 60mm",
+            gearing: "24/63",
+            ignition: "Vape static"
+          },
+          High: {
+            cylinder: '<a href="https://sip-scootershop.com/en/p/14001200" target="_blank">Malossi MHR 221</a>',
+            carburetor: '<a href="https://sip-scootershop.com/en/p/40000200" target="_blank">PHBH 30</a>',
+            exhaust: '<a href="https://sip-scootershop.com/en/p/20020400" target="_blank">JL RZ Evo</a>',
+            crankshaft: "Full circle",
+            gearing: "Long 24/60",
+            ignition: '<a href="https://sip-scootershop.com/en/p/51000200" target="_blank">Vape Variable</a>'
+          }
+        },
+        Touring: {
+          Low: {
+            cylinder: '<a href="https://sip-scootershop.com/en/p/14000900" target="_blank">DR 200cc</a>',
+            carburetor: '<a href="https://sip-scootershop.com/en/p/40000000" target="_blank">SI 24/24</a>',
+            exhaust: '<a href="https://sip-scootershop.com/en/p/20020200" target="_blank">Polini Box</a>',
+            crankshaft: "Standard",
+            gearing: "23/65",
+            ignition: "Points"
+          },
+          Medium: {
+            cylinder: '<a href="https://sip-scootershop.com/en/p/14001000" target="_blank">Malossi Sport 210</a>',
+            carburetor: '<a href="https://sip-scootershop.com/en/p/40000100" target="_blank">SI 26/26</a>',
+            exhaust: '<a href="https://sip-scootershop.com/en/p/20020300" target="_blank">Sip Road 2.0</a>',
+            crankshaft: "Long stroke",
+            gearing: "24/63",
+            ignition: "Vape static"
+          },
+          High: {
+            cylinder: '<a href="https://sip-scootershop.com/en/p/14001200" target="_blank">Malossi MHR 221</a>',
+            carburetor: '<a href="https://sip-scootershop.com/en/p/40000200" target="_blank">PHBH 30</a>',
+            exhaust: '<a href="https://sip-scootershop.com/en/p/20020400" target="_blank">JL RZ Evo</a>',
+            crankshaft: "Full circle",
+            gearing: "Long 24/60",
+            ignition: '<a href="https://sip-scootershop.com/en/p/51000200" target="_blank">Vape Variable</a>'
+          }
+        },
+        Racing: {
+          Low: {},
           Medium: {},
           High: {}
-        },
-        Touring: { Low: {}, Medium: {}, High: {} },
-        Racing: { Low: {}, Medium: {}, High: {} }
+        }
       }
-      // Add other models with tuning setups
     };
 
     function getRecommendation() {
