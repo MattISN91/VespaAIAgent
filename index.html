@@ -20,7 +20,7 @@
   <h1>Vespa Tuning Advisor</h1>
 
   <label for="vespaModel">Vespa Model (1960-1995):</label>
-  <select id="vespaModel" onchange="updateCCOptions()">
+  <select id="vespaModel">
     <option value="V50">V50</option>
     <option value="Primavera">Primavera</option>
     <option value="ET3">ET3</option>
@@ -37,9 +37,6 @@
     <option value="GS160">GS 160</option>
     <option value="SS180">SS 180</option>
   </select>
-
-  <label for="engineCC">Cylinder Size (cc):</label>
-  <select id="engineCC"></select>
 
   <label for="vespaUse">Main Use:</label>
   <select id="vespaUse">
@@ -60,34 +57,8 @@
   <div id="recommendation" class="recommendation"></div>
 
   <script>
-    const modelToCC = {
-      V50: [50, 75],
-      Primavera: [125],
-      ET3: [125],
-      PK50: [50, 75],
-      PK125: [125],
-      PX80: [80],
-      PX125: [125, 150, 177],
-      PX150: [150, 177],
-      PX200: [200],
-      Rally180: [180],
-      Rally200: [200],
-      Sprint: [150, 177],
-      Super: [125, 150],
-      GS160: [160],
-      SS180: [180]
-    };
-
-    function updateCCOptions() {
-      const model = document.getElementById("vespaModel").value;
-      const ccSelect = document.getElementById("engineCC");
-      const ccOptions = modelToCC[model] || [];
-      ccSelect.innerHTML = ccOptions.map(cc => `<option value="${cc}">${cc}</option>`).join('');
-    }
-
     function getRecommendation() {
       const model = document.getElementById("vespaModel").value;
-      const cc = parseInt(document.getElementById("engineCC").value);
       const use = document.getElementById("vespaUse").value;
       const budget = document.getElementById("tuningBudget").value;
       const resultDiv = document.getElementById("recommendation");
@@ -101,20 +72,20 @@
         ignition: "Stock"
       };
 
-      if (cc === 50) {
+      if (model === "V50" && use === "City" && budget === "Low") {
         setup.cylinder = '<a href="https://www.sip-scootershop.com/en/product/racing-cylinder-polini-75-cc_14000500" target="_blank">Polini 75cc</a>';
-        setup.carburetor = '<a href="https://www.sip-scootershop.com/en/product/carburettor-dell-orto-shb-1616_41000100" target="_blank">Dell\'Orto SHB 16/16</a>';
+        setup.carburetor = '<a href="https://www.sip-scootershop.com/en/product/carburettor-dell-orto-shb-1616_41000100" target="_blank">Dell'Orto SHB 16/16</a>';
         setup.exhaust = '<a href="https://www.sip-scootershop.com/en/product/racing-exhaust-sito-plus_40301000" target="_blank">Sito Plus</a>';
-      } else if (cc === 125 && use === "Touring") {
+      } else if (model === "PX125" && use === "Touring" && budget === "Medium") {
         setup.cylinder = '<a href="https://www.sip-scootershop.com/en/product/racing-cylinder-dr-177-cc_10001000" target="_blank">DR 177cc</a>';
-        setup.carburetor = '<a href="https://www.sip-scootershop.com/en/product/carburettor-dell-orto-si-2020d_40000100" target="_blank">Dell\'Orto SI 20/20</a>';
+        setup.carburetor = '<a href="https://www.sip-scootershop.com/en/product/carburettor-dell-orto-si-2020d_40000100" target="_blank">Dell'Orto SI 20/20</a>';
         setup.exhaust = '<a href="https://www.sip-scootershop.com/en/product/racing-exhaust-sip-road-xl_24164000" target="_blank">SIP Road XL</a>';
         setup.crankshaft = 'Touring crank';
         setup.gearing = '23/65';
         setup.ignition = '<a href="https://www.sip-scootershop.com/en/product/ignition-sip-performance-by-vape-variable_51000100" target="_blank">Vape Variable</a>';
-      } else if (cc >= 150 && budget === "High") {
+      } else if (budget === "High") {
         setup.cylinder = '<a href="https://www.sip-scootershop.com/en/product/racing-cylinder-polini-177-cc_14000800" target="_blank">Polini 177cc</a>';
-        setup.carburetor = '<a href="https://www.sip-scootershop.com/en/product/carburettor-dell-orto-si-2424e_40000000" target="_blank">Dell\'Orto SI 24/24</a>';
+        setup.carburetor = '<a href="https://www.sip-scootershop.com/en/product/carburettor-dell-orto-si-2424e_40000000" target="_blank">Dell'Orto SI 24/24</a>';
         setup.exhaust = '<a href="https://www.sip-scootershop.com/en/product/racing-exhaust-polini-box_20020200" target="_blank">Polini Box</a>';
         setup.crankshaft = 'Long stroke crank';
         setup.gearing = '24/63';
@@ -122,7 +93,7 @@
       }
 
       resultDiv.innerHTML = `
-        <h2>Recommended Setup for ${model} (${cc}cc)</h2>
+        <h2>Recommended Setup for ${model}</h2>
         <ul>
           <li><strong>Cylinder Kit:</strong> ${setup.cylinder}</li>
           <li><strong>Carburetor:</strong> ${setup.carburetor}</li>
@@ -133,8 +104,6 @@
         </ul>
       `;
     }
-
-    window.onload = updateCCOptions;
   </script>
 </body>
 </html>
