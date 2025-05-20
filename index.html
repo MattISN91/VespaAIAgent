@@ -19,23 +19,40 @@
 <body>
   <h1>Vespa Tuning Advisor</h1>
 
-  <label for="vespaModel">Vespa Model (1960-1995):</label>
+  <label for="vespaModel">Vespa Model (1960–1995):</label>
   <select id="vespaModel">
-    <option value="V50">V50</option>
-    <option value="Primavera">Primavera</option>
-    <option value="ET3">ET3</option>
-    <option value="PK50">PK50</option>
-    <option value="PK125">PK125</option>
-    <option value="PX80">PX80</option>
-    <option value="PX125">PX125</option>
-    <option value="PX150">PX150</option>
-    <option value="PX200">PX200</option>
-    <option value="Rally180">Rally 180</option>
-    <option value="Rally200">Rally 200</option>
-    <option value="Sprint">Sprint</option>
-    <option value="Super">Super</option>
-    <option value="GS160">GS 160</option>
-    <option value="SS180">SS 180</option>
+    <option value="Vespa 50 (V5A1)">Vespa 50 (V5A1)</option>
+    <option value="Vespa 50 Special">Vespa 50 Special</option>
+    <option value="Vespa 50 Elestart">Vespa 50 Elestart</option>
+    <option value="Vespa 50 L/N/R">Vespa 50 L/N/R</option>
+    <option value="Vespa 90">Vespa 90</option>
+    <option value="Vespa 90 Racer">Vespa 90 Racer</option>
+    <option value="Vespa 100">Vespa 100</option>
+    <option value="Vespa 100 Sport">Vespa 100 Sport</option>
+    <option value="Vespa Primavera 125">Vespa Primavera 125</option>
+    <option value="Vespa Primavera ET3">Vespa Primavera ET3</option>
+    <option value="Vespa PK 50">Vespa PK 50</option>
+    <option value="Vespa PK 50 XL">Vespa PK 50 XL</option>
+    <option value="Vespa PK 80">Vespa PK 80</option>
+    <option value="Vespa PK 100">Vespa PK 100</option>
+    <option value="Vespa PK 125 / S">Vespa PK 125 / S</option>
+    <option value="Vespa 125 VNB">Vespa 125 VNB</option>
+    <option value="Vespa 125 GT">Vespa 125 GT</option>
+    <option value="Vespa 125 GTR">Vespa 125 GTR</option>
+    <option value="Vespa 125 Super">Vespa 125 Super</option>
+    <option value="Vespa 125 TS">Vespa 125 TS</option>
+    <option value="Vespa 150 VBA/VBB">Vespa 150 VBA/VBB</option>
+    <option value="Vespa 150 GL">Vespa 150 GL</option>
+    <option value="Vespa 150 Sprint">Vespa 150 Sprint</option>
+    <option value="Vespa 150 Super">Vespa 150 Super</option>
+    <option value="Vespa 160 GS">Vespa 160 GS</option>
+    <option value="Vespa 180 SS">Vespa 180 SS</option>
+    <option value="Vespa 180 Rally">Vespa 180 Rally</option>
+    <option value="Vespa 200 Rally">Vespa 200 Rally</option>
+    <option value="Vespa PX 80">Vespa PX 80</option>
+    <option value="Vespa PX 125 / E">Vespa PX 125 / E</option>
+    <option value="Vespa PX 150 / E">Vespa PX 150 / E</option>
+    <option value="Vespa PX 200 / E">Vespa PX 200 / E</option>
   </select>
 
   <label for="vespaUse">Main Use:</label>
@@ -57,48 +74,54 @@
   <div id="recommendation" class="recommendation"></div>
 
   <script>
+    const tuningDatabase = {
+      "Vespa 50 (V5A1)": {
+        City: {
+          Low: {
+            cylinder: '<a href="https://sip-scootershop.com/en/p/14000500" target="_blank">Polini 75cc</a>',
+            carburetor: '<a href="https://sip-scootershop.com/en/p/41000100" target="_blank">SHB 16/16</a>',
+            exhaust: '<a href="https://sip-scootershop.com/en/p/40301000" target="_blank">Sito Plus</a>',
+            crankshaft: "Standard",
+            gearing: "18/67",
+            ignition: "Points"
+          },
+          Medium: { /* more tuned parts */ },
+          High: { /* race setup */ }
+        },
+        Touring: { Low: {}, Medium: {}, High: {} },
+        Racing: { Low: {}, Medium: {}, High: {} }
+      },
+      "Vespa PX 200 / E": {
+        City: {
+          Low: {
+            cylinder: '<a href="https://sip-scootershop.com/en/p/14000800" target="_blank">Polini 208cc</a>',
+            carburetor: '<a href="https://sip-scootershop.com/en/p/40000000" target="_blank">SI 24/24</a>',
+            exhaust: '<a href="https://sip-scootershop.com/en/p/20020200" target="_blank">Polini Box</a>',
+            crankshaft: "Long stroke",
+            gearing: "Cosa 23/65",
+            ignition: '<a href="https://sip-scootershop.com/en/p/51000100" target="_blank">Vape Variable</a>'
+          },
+          Medium: {},
+          High: {}
+        },
+        Touring: { Low: {}, Medium: {}, High: {} },
+        Racing: { Low: {}, Medium: {}, High: {} }
+      }
+      // Add other models with tuning setups
+    };
+
     function getRecommendation() {
       const model = document.getElementById("vespaModel").value;
       const use = document.getElementById("vespaUse").value;
       const budget = document.getElementById("tuningBudget").value;
       const resultDiv = document.getElementById("recommendation");
 
-      let setup = {
-        cylinder: "Stock",
-        carburetor: "Stock",
-        exhaust: "Stock",
-        crankshaft: "Stock",
-        gearing: "Stock",
-        ignition: "Stock"
-      };
+      const setup =
+        tuningDatabase[model] && tuningDatabase[model][use] && tuningDatabase[model][use][budget];
 
-      if (model === "V50" && use === "City" && budget === "Low") {
-        setup = {
-          cylinder: '<a href="https://www.sip-scootershop.com/en/product/racing-cylinder-polini-75-cc_14000500" target="_blank">Polini 75cc</a>',
-          carburetor: '<a href="https://www.sip-scootershop.com/en/product/carburettor-dell-orto-shb-1616_41000100" target="_blank">Dell\'Orto SHB 16/16</a>',
-          exhaust: '<a href="https://www.sip-scootershop.com/en/product/racing-exhaust-sito-plus_40301000" target="_blank">Sito Plus</a>',
-          crankshaft: "Standard",
-          gearing: "18/67",
-          ignition: "Points"
-        };
-      } else if (model === "PX125" && use === "Touring" && budget === "Medium") {
-        setup = {
-          cylinder: '<a href="https://www.sip-scootershop.com/en/product/racing-cylinder-dr-177-cc_10001000" target="_blank">DR 177cc</a>',
-          carburetor: '<a href="https://www.sip-scootershop.com/en/product/carburettor-dell-orto-si-2020d_40000100" target="_blank">Dell\'Orto SI 20/20</a>',
-          exhaust: '<a href="https://www.sip-scootershop.com/en/product/racing-exhaust-sip-road-xl_24164000" target="_blank">SIP Road XL</a>',
-          crankshaft: "Touring crank",
-          gearing: "23/65",
-          ignition: '<a href="https://www.sip-scootershop.com/en/product/ignition-sip-performance-by-vape-variable_51000100" target="_blank">Vape Variable</a>'
-        };
-      } else if (budget === "High") {
-        setup = {
-          cylinder: '<a href="https://www.sip-scootershop.com/en/product/racing-cylinder-polini-177-cc_14000800" target="_blank">Polini 177cc</a>',
-          carburetor: '<a href="https://www.sip-scootershop.com/en/product/carburettor-dell-orto-si-2424e_40000000" target="_blank">Dell\'Orto SI 24/24</a>',
-          exhaust: '<a href="https://www.sip-scootershop.com/en/product/racing-exhaust-polini-box_20020200" target="_blank">Polini Box</a>',
-          crankshaft: "Long stroke crank",
-          gearing: "24/63",
-          ignition: '<a href="https://www.sip-scootershop.com/en/product/ignition-sip-performance-by-vape-sport_51007SA0" target="_blank">Vape Sport</a>'
-        };
+      if (!setup || Object.keys(setup).length === 0) {
+        resultDiv.innerHTML = `<p>No detailed tuning recommendation available for ${model} with ${use} use and ${budget} budget yet.</p>`;
+        return;
       }
 
       resultDiv.innerHTML = `
