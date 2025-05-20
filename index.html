@@ -49,38 +49,10 @@
 
   <script>
     const vespaModels = {
-      "Vespa 50 (V5A1)": 50,
-      "Vespa 50 Special": 50,
-      "Vespa 50 Elestart": 50,
-      "Vespa 50 L/N/R": 50,
-      "Vespa 90": 90,
-      "Vespa 90 Racer": 90,
-      "Vespa 100": 100,
-      "Vespa 100 Sport": 100,
-      "Vespa Primavera": 125,
-      "Vespa Primavera ET3": 125,
-      "Vespa PK 50": 50,
-      "Vespa PK 50 XL": 50,
-      "Vespa PK 80": 80,
-      "Vespa PK 100": 100,
-      "Vespa PK 125 / S": 125,
-      "Vespa 125 VNB": 125,
-      "Vespa 125 GT": 125,
-      "Vespa 125 GTR": 125,
-      "Vespa 125 Super": 125,
-      "Vespa 125 TS": 125,
-      "Vespa 150 VBA/VBB": 150,
-      "Vespa 150 GL": 150,
-      "Vespa 150 Sprint": 150,
-      "Vespa 150 Super": 150,
-      "Vespa 160 GS": 160,
-      "Vespa 180 SS": 180,
-      "Vespa 180 Rally": 180,
-      "Vespa 200 Rally": 200,
       "Vespa PX 80": 80,
       "Vespa PX 125 / E": 125,
-      "Vespa PX 150 / E": 150,
-      "Vespa PX 200 / E": 200
+      "Vespa Primavera": 125,
+      "Vespa 150 Sprint": 150
     };
 
     const tuningDatabase = {
@@ -93,8 +65,107 @@
             crankshaft: "Standard",
             gearing: "20/68",
             ignition: "Points"
+          },
+          Medium: {
+            cylinder: '<a href="https://sip-scootershop.com/en/p/14060000">Polini 135cc</a>',
+            carburetor: '<a href="https://sip-scootershop.com/en/p/40020000">SI 24/24</a>',
+            exhaust: '<a href="https://sip-scootershop.com/en/p/24160000">Polini Original Box</a>',
+            crankshaft: "Mazzucchelli Touring",
+            gearing: "21/68",
+            ignition: "Electronic"
+          },
+          High: {
+            cylinder: '<a href="https://sip-scootershop.com/en/p/14001000">Malossi 139cc</a>',
+            carburetor: '<a href="https://sip-scootershop.com/en/p/40030000">PHBL 25</a>',
+            exhaust: '<a href="https://sip-scootershop.com/en/p/24170000">SIP Road 2.0</a>',
+            crankshaft: "Racing Longstroke",
+            gearing: "22/68",
+            ignition: "Vape Variable"
           }
-          // Extend with Medium & High, Touring, Racing as needed
+        }
+      },
+      "Vespa PX 125 / E": {
+        City: {
+          Low: {
+            cylinder: '<a href="https://sip-scootershop.com/en/p/14001200">DR 125cc</a>',
+            carburetor: '<a href="https://sip-scootershop.com/en/p/40000000">SI 20/20</a>',
+            exhaust: '<a href="https://sip-scootershop.com/en/p/20020200">Sito Plus</a>',
+            crankshaft: "Standard",
+            gearing: "22/68",
+            ignition: "Points"
+          },
+          Medium: {
+            cylinder: '<a href="https://sip-scootershop.com/en/p/14060000">Polini 177cc</a>',
+            carburetor: '<a href="https://sip-scootershop.com/en/p/40020000">SI 24/24</a>',
+            exhaust: '<a href="https://sip-scootershop.com/en/p/24160000">Polini Touring</a>',
+            crankshaft: "Mazzucchelli Touring",
+            gearing: "23/65",
+            ignition: "Electronic"
+          },
+          High: {
+            cylinder: '<a href="https://sip-scootershop.com/en/p/14000000">Malossi 177cc</a>',
+            carburetor: '<a href="https://sip-scootershop.com/en/p/40030000">PHBL 25</a>',
+            exhaust: '<a href="https://sip-scootershop.com/en/p/24170000">SIP Road XL</a>',
+            crankshaft: "Longstroke Racing",
+            gearing: "24/63",
+            ignition: "Vape Variable Race"
+          }
+        }
+      },
+      "Vespa Primavera": {
+        City: {
+          Low: {
+            cylinder: '<a href="https://sip-scootershop.com/en/p/13002000">DR 130cc</a>',
+            carburetor: '<a href="https://sip-scootershop.com/en/p/40050000">SHB 19.19</a>',
+            exhaust: '<a href="https://sip-scootershop.com/en/p/24350000">Polini Banana</a>',
+            crankshaft: "Standard",
+            gearing: "24/72",
+            ignition: "Points"
+          },
+          Medium: {
+            cylinder: '<a href="https://sip-scootershop.com/en/p/13000000">Polini 130cc</a>',
+            carburetor: '<a href="https://sip-scootershop.com/en/p/40060000">SHB 24</a>',
+            exhaust: '<a href="https://sip-scootershop.com/en/p/24360000">Polini Original Box</a>',
+            crankshaft: "Mazzucchelli Touring",
+            gearing: "27/69",
+            ignition: "Electronic"
+          },
+          High: {
+            cylinder: '<a href="https://sip-scootershop.com/en/p/13001000">Malossi 136cc</a>',
+            carburetor: '<a href="https://sip-scootershop.com/en/p/40070000">PHBL 25</a>',
+            exhaust: '<a href="https://sip-scootershop.com/en/p/24370000">SIP Road XL</a>',
+            crankshaft: "Racing",
+            gearing: "29/68",
+            ignition: "Vape Variable"
+          }
+        }
+      },
+      "Vespa 150 Sprint": {
+        City: {
+          Low: {
+            cylinder: '<a href="https://sip-scootershop.com/en/p/14000020">DR 150cc</a>',
+            carburetor: '<a href="https://sip-scootershop.com/en/p/40000010">SI 20/20</a>',
+            exhaust: '<a href="https://sip-scootershop.com/en/p/20020210">Sito Plus</a>',
+            crankshaft: "Standard",
+            gearing: "22/67",
+            ignition: "Points"
+          },
+          Medium: {
+            cylinder: '<a href="https://sip-scootershop.com/en/p/14000030">Polini 177cc</a>',
+            carburetor: '<a href="https://sip-scootershop.com/en/p/40020000">SI 24/24</a>',
+            exhaust: '<a href="https://sip-scootershop.com/en/p/24160010">Polini Touring</a>',
+            crankshaft: "Mazzucchelli Touring",
+            gearing: "23/65",
+            ignition: "Electronic"
+          },
+          High: {
+            cylinder: '<a href="https://sip-scootershop.com/en/p/14001010">Malossi 210cc Sport</a>',
+            carburetor: '<a href="https://sip-scootershop.com/en/p/40030010">PHBL 28</a>',
+            exhaust: '<a href="https://sip-scootershop.com/en/p/24170010">SIP Road XL</a>',
+            crankshaft: "Racing Longstroke",
+            gearing: "24/63",
+            ignition: "Vape Variable Race"
+          }
         }
       }
     };
