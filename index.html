@@ -21,7 +21,6 @@
       background-color: #f7efdc;
       display: flex;
       align-items: center;
-      justify-content: flex-start;
       gap: 20px;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
@@ -35,17 +34,17 @@
       font-size: 2rem;
       color: #386051;
       margin: 0;
-      line-height: 1.4;
     }
 
     .main-area {
       display: flex;
       justify-content: flex-start;
       padding: 40px 30px;
+      gap: 40px;
+      flex-wrap: wrap;
     }
 
     .form-container {
-      max-width: 500px;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
@@ -56,7 +55,6 @@
       color: #f7efdc;
       font-size: 2.5rem;
       margin-bottom: 20px;
-      text-align: left;
     }
 
     .dropdown-group {
@@ -92,11 +90,12 @@
 
     .recommendation {
       background-color: #ffffff10;
-      margin-top: 30px;
       padding: 20px;
       border-radius: 10px;
       text-align: left;
-      width: 100%;
+      min-width: 300px;
+      max-width: 400px;
+      flex-grow: 1;
       color: #fff;
     }
 
@@ -123,8 +122,10 @@
         align-items: center;
       }
 
-      .form-container {
-        align-items: center;
+      .form-container,
+      .recommendation {
+        width: 100%;
+        max-width: none;
       }
 
       .main-title {
@@ -172,10 +173,10 @@
           <option value="high">High</option>
         </select>
       </div>
+    </div>
 
-      <div class="recommendation" id="recommendationOutput">
-        <h3>Select your preferences to see recommendations</h3>
-      </div>
+    <div class="recommendation" id="recommendationOutput">
+      <h3>Select your preferences to see recommendations</h3>
     </div>
   </div>
 
