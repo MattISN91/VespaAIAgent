@@ -38,42 +38,41 @@
       line-height: 1.4;
     }
 
+    .main-area {
+      display: flex;
+      justify-content: flex-start;
+      padding: 40px 30px;
+    }
+
+    .form-container {
+      max-width: 500px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
     .main-title {
       font-family: 'Josefin Sans', sans-serif;
       color: #f7efdc;
-      font-size: 3rem;
-      margin-top: 40px;
-      text-align: center;
-    }
-
-    .container {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      max-width: 800px;
-      margin: 0 auto;
-      flex-wrap: wrap;
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      text-align: left;
     }
 
     .dropdown-group {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin: 10px;
+      margin-bottom: 15px;
       color: #fff;
       font-size: 1.1rem;
+      width: 100%;
     }
 
     .dropdown-group label {
+      display: block;
       margin-bottom: 5px;
     }
 
     select {
       padding: 12px 16px;
-      margin: 0;
       border-radius: 8px;
       border: none;
       font-size: 1rem;
@@ -81,8 +80,8 @@
       color: #386051;
       font-weight: bold;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-      width: 220px;
-      max-width: 90%;
+      width: 100%;
+      max-width: 320px;
       transition: background-color 0.2s ease;
     }
 
@@ -117,44 +116,66 @@
       font-size: 0.9rem;
       color: #ddd;
     }
+
+    @media screen and (max-width: 768px) {
+      .main-area {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .form-container {
+        align-items: center;
+      }
+
+      .main-title {
+        text-align: center;
+      }
+
+      .dropdown-group,
+      .recommendation {
+        text-align: center;
+      }
+    }
   </style>
 </head>
 <body>
   <header>
-    <img src="https://github.com/MattISN91/VespaAIAgent/blob/main/ChatGPT%20Image%20May%2020%2C%202025%2C%2001_19_46%20PM.png/?raw=true" alt="Vespa Logo">
+    <img src="https://github.com/MattISN91/VespaAIAgent/blob/main/ChatGPT%20Image%20May%2020%2C%202025%2C%2001_19_46%20PM.png/?raw=true" alt="Logo">
     <p class="subtext">"For passionate riders seeking the perfect tuning setup for their beloved two-wheeler"</p>
   </header>
 
-  <h1 class="main-title">Vespa Configurator</h1>
+  <div class="main-area">
+    <div class="form-container">
+      <h1 class="main-title">Configurator</h1>
 
-  <div class="container">
-    <div class="dropdown-group">
-      <label for="model">Model</label>
-      <select id="model">
-        <option value="PX80">Vespa PX80</option>
-      </select>
-    </div>
+      <div class="dropdown-group">
+        <label for="model">Model</label>
+        <select id="model">
+          <option value="PX80">PX80</option>
+        </select>
+      </div>
 
-    <div class="dropdown-group">
-      <label for="usage">Usage</label>
-      <select id="usage">
-        <option value="city">City</option>
-        <option value="touring">Touring</option>
-        <option value="racing">Racing</option>
-      </select>
-    </div>
+      <div class="dropdown-group">
+        <label for="usage">Usage</label>
+        <select id="usage">
+          <option value="city">City</option>
+          <option value="touring">Touring</option>
+          <option value="racing">Racing</option>
+        </select>
+      </div>
 
-    <div class="dropdown-group">
-      <label for="budget">Budget</label>
-      <select id="budget">
-        <option value="low">Low</option>
-        <option value="medium">Medium</option>
-        <option value="high">High</option>
-      </select>
-    </div>
+      <div class="dropdown-group">
+        <label for="budget">Budget</label>
+        <select id="budget">
+          <option value="low">Low</option>
+          <option value="medium">Medium</option>
+          <option value="high">High</option>
+        </select>
+      </div>
 
-    <div class="recommendation" id="recommendationOutput">
-      <h3>Select your preferences to see recommendations</h3>
+      <div class="recommendation" id="recommendationOutput">
+        <h3>Select your preferences to see recommendations</h3>
+      </div>
     </div>
   </div>
 
@@ -192,7 +213,6 @@
               link: "https://www.sip-scootershop.com/en/product/ignition-px-lusso_50000000"
             }
           }
-          // medium/high etc...
         }
       }
     };
@@ -215,7 +235,7 @@
       }
 
       output.innerHTML = `
-        <h3>Tuning Setup for ${model} - ${usage} - ${budget} Budget</h3>
+        <h3>Recommended Setup (${model} - ${usage} - ${budget})</h3>
         <ul>
           <li><strong>Cylinder:</strong> <a href="${setup.cylinder.link}" target="_blank">${setup.cylinder.name}</a></li>
           <li><strong>Carburetor:</strong> <a href="${setup.carburetor.link}" target="_blank">${setup.carburetor.name}</a></li>
