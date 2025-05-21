@@ -35,6 +35,15 @@
       font-size: 2rem;
       color: #386051;
       margin: 0;
+      line-height: 1.4;
+    }
+
+    .main-title {
+      font-family: 'Josefin Sans', sans-serif;
+      color: #f7efdc;
+      font-size: 3rem;
+      margin-top: 40px;
+      text-align: center;
     }
 
     .container {
@@ -46,11 +55,25 @@
       padding: 20px;
       max-width: 800px;
       margin: 0 auto;
+      flex-wrap: wrap;
+    }
+
+    .dropdown-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 10px;
+      color: #fff;
+      font-size: 1.1rem;
+    }
+
+    .dropdown-group label {
+      margin-bottom: 5px;
     }
 
     select {
       padding: 12px 16px;
-      margin: 10px;
+      margin: 0;
       border-radius: 8px;
       border: none;
       font-size: 1rem;
@@ -58,6 +81,14 @@
       color: #386051;
       font-weight: bold;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+      width: 220px;
+      max-width: 90%;
+      transition: background-color 0.2s ease;
+    }
+
+    select:hover {
+      background-color: #e5d9b6;
+      cursor: pointer;
     }
 
     .recommendation {
@@ -90,26 +121,37 @@
 </head>
 <body>
   <header>
-    <img src=https://github.com/MattISN91/VespaAIAgent/blob/main/ChatGPT%20Image%20May%2020%2C%202025%2C%2001_19_46%20PM.png/?raw=true>
+    <img src="https://github.com/MattISN91/VespaAIAgent/blob/main/ChatGPT%20Image%20May%2020%2C%202025%2C%2001_19_46%20PM.png/?raw=true" alt="Vespa Logo">
     <p class="subtext">"For passionate riders seeking the perfect tuning setup for their beloved two-wheeler"</p>
   </header>
 
+  <h1 class="main-title">Vespa Configurator</h1>
+
   <div class="container">
-    <select id="model">
-      <option value="PX80">Vespa PX80</option>
-    </select>
+    <div class="dropdown-group">
+      <label for="model">Model</label>
+      <select id="model">
+        <option value="PX80">Vespa PX80</option>
+      </select>
+    </div>
 
-    <select id="usage">
-      <option value="city">City</option>
-      <option value="touring">Touring</option>
-      <option value="racing">Racing</option>
-    </select>
+    <div class="dropdown-group">
+      <label for="usage">Usage</label>
+      <select id="usage">
+        <option value="city">City</option>
+        <option value="touring">Touring</option>
+        <option value="racing">Racing</option>
+      </select>
+    </div>
 
-    <select id="budget">
-      <option value="low">Low</option>
-      <option value="medium">Medium</option>
-      <option value="high">High</option>
-    </select>
+    <div class="dropdown-group">
+      <label for="budget">Budget</label>
+      <select id="budget">
+        <option value="low">Low</option>
+        <option value="medium">Medium</option>
+        <option value="high">High</option>
+      </select>
+    </div>
 
     <div class="recommendation" id="recommendationOutput">
       <h3>Select your preferences to see recommendations</h3>
@@ -149,65 +191,8 @@
               name: "Original Contactless",
               link: "https://www.sip-scootershop.com/en/product/ignition-px-lusso_50000000"
             }
-          },
-          medium: {
-            cylinder: {
-              name: "Polini 133cc",
-              link: "https://www.sip-scootershop.com/en/product/racing-cylinder-polini-133cc_14000510"
-            },
-            carburetor: {
-              name: "SI 24/24",
-              link: "https://www.sip-scootershop.com/en/product/carburettor-dell-orto-si-24-24e_40070000"
-            },
-            exhaust: {
-              name: "Polini Original",
-              link: "https://www.sip-scootershop.com/en/product/racing-exhaust-polini_20020000"
-            },
-            crankshaft: {
-              name: "Mazzucchelli Racing",
-              link: "https://www.sip-scootershop.com/en/product/crankshaft-mazzucchelli-racing_45027000"
-            },
-            gearing: {
-              name: "23/64 DRT",
-              link: "https://www.sip-scootershop.com/en/product/gearbox-drt-23-64_87442300"
-            },
-            ignition: {
-              name: "Vape Road",
-              link: "https://www.sip-scootershop.com/en/product/ignition-vape-road_50008000"
-            }
-          },
-          high: {
-            cylinder: {
-              name: "Malossi 139cc",
-              link: "https://www.sip-scootershop.com/en/product/racing-cylinder-malossi-139cc_3111395"
-            },
-            carburetor: {
-              name: "PHBL 25",
-              link: "https://www.sip-scootershop.com/en/product/carburettor-dell-orto-phbl-25bs_40090000"
-            },
-            exhaust: {
-              name: "SIP Road 2.0",
-              link: "https://www.sip-scootershop.com/en/product/racing-exhaust-sip-road-20_24166000"
-            },
-            crankshaft: {
-              name: "Pinasco Racing",
-              link: "https://www.sip-scootershop.com/en/product/crankshaft-pinasco-racing_45028000"
-            },
-            gearing: {
-              name: "Short 22/68",
-              link: "https://www.sip-scootershop.com/en/product/gearbox-short-22-68_87442200"
-            },
-            ignition: {
-              name: "Vape Sport",
-              link: "https://www.sip-scootershop.com/en/product/ignition-vape-sport_50008100"
-            }
           }
-        },
-        touring: {
-          // Add touring low/med/high based on your screenshot — I can do that next!
-        },
-        racing: {
-          // Add racing low/med/high based on your screenshot — I can do that next!
+          // medium/high etc...
         }
       }
     };
