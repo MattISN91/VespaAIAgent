@@ -11,18 +11,16 @@
       margin: 0;
       padding: 0;
       color: #386051;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
     }
 
     header {
-      padding: 20px 30px;
-      background-color: #f7efdc;
+      padding: 15px 30px;
+      background-color: #f7efdcff;
       display: flex;
       align-items: center;
+      justify-content: flex-start;
       gap: 20px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      flex-wrap: wrap;
     }
 
     header img {
@@ -31,7 +29,7 @@
 
     .subtext {
       font-family: 'Caveat', cursive;
-      font-size: 2rem;
+      font-size: 1.5rem;
       color: #386051;
       margin: 0;
     }
@@ -40,63 +38,48 @@
       display: flex;
       justify-content: flex-start;
       padding: 40px 30px;
-      gap: 40px;
+      gap: 30px;
       flex-wrap: wrap;
     }
 
     .form-container {
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
+      gap: 15px;
     }
 
     .main-title {
-      font-family: 'Josefin Sans', sans-serif;
-      color: #f7efdc;
+      font-family: 'Caveat', cursive;
       font-size: 2.5rem;
-      margin-bottom: 20px;
+      color: #fff;
+      margin-bottom: 10px;
     }
 
     .dropdown-group {
-      margin-bottom: 15px;
-      color: #fff;
-      font-size: 1.1rem;
-      width: 100%;
+      display: flex;
+      flex-direction: column;
     }
 
-    .dropdown-group label {
-      display: block;
+    label {
+      color: #fff;
       margin-bottom: 5px;
     }
 
     select {
-      padding: 12px 16px;
-      border-radius: 8px;
+      padding: 10px;
+      border-radius: 5px;
       border: none;
       font-size: 1rem;
-      background-color: #f7efdc;
-      color: #386051;
-      font-weight: bold;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-      width: 100%;
-      max-width: 320px;
-      transition: background-color 0.2s ease;
-    }
-
-    select:hover {
-      background-color: #e5d9b6;
-      cursor: pointer;
     }
 
     .recommendation {
       background-color: #ffffff10;
       padding: 20px;
       border-radius: 10px;
-      text-align: left;
-      min-width: 300px;
-      max-width: 400px;
-      flex-grow: 1;
       color: #fff;
+      min-width: 280px;
+      max-width: 360px;
+      flex-grow: 1;
     }
 
     .recommendation h3 {
@@ -108,40 +91,41 @@
       text-decoration: none;
     }
 
+    .image-container {
+      flex-shrink: 0;
+      max-width: 300px;
+      margin-left: 20px;
+    }
+
+    .image-container img {
+      width: 100%;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+
     footer {
       text-align: center;
-      margin-top: auto;
+      margin-top: 30px;
       padding: 20px;
       font-size: 0.9rem;
       color: #ddd;
     }
 
-    @media screen and (max-width: 768px) {
+    @media screen and (max-width: 1024px) {
       .main-area {
         flex-direction: column;
         align-items: center;
       }
 
-      .form-container,
-      .recommendation {
-        width: 100%;
-        max-width: none;
-      }
-
-      .main-title {
-        text-align: center;
-      }
-
-      .dropdown-group,
-      .recommendation {
-        text-align: center;
+      .image-container {
+        margin-left: 0;
       }
     }
   </style>
 </head>
 <body>
   <header>
-    <img src="https://github.com/MattISN91/VespaAIAgent/blob/main/ChatGPT%20Image%20May%2020%2C%202025%2C%2001_19_46%20PM.png/?raw=true" alt="Logo">
+    <img src="https://github.com/MattISN91/VespaAIAgent/blob/main/ChatGPT%20Image%20May%2020%2C%202025%2C%2001_19_46%20PM.png/?raw=true">
     <p class="subtext">"For passionate riders seeking the perfect tuning setup for their beloved two-wheeler"</p>
   </header>
 
@@ -178,6 +162,10 @@
     <div class="recommendation" id="recommendationOutput">
       <h3>Select your preferences to see recommendations</h3>
     </div>
+
+    <div class="image-container" id="scooterImageContainer">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Vespa_PX_125.jpg/800px-Vespa_PX_125.jpg" alt="Scooter" id="scooterImage">
+    </div>
   </div>
 
   <footer>
@@ -185,6 +173,12 @@
   </footer>
 
   <script>
+    const modelSelect = document.getElementById('model');
+    const usageSelect = document.getElementById('usage');
+    const budgetSelect = document.getElementById('budget');
+    const output = document.getElementById('recommendationOutput');
+    const scooterImage = document.getElementById('scooterImage');
+
     const tuningDatabase = {
       PX80: {
         city: {
@@ -218,16 +212,10 @@
       }
     };
 
-    const modelSelect = document.getElementById('model');
-    const usageSelect = document.getElementById('usage');
-    const budgetSelect = document.getElementById('budget');
-    const output = document.getElementById('recommendationOutput');
-
     function updateRecommendation() {
       const model = modelSelect.value;
       const usage = usageSelect.value;
       const budget = budgetSelect.value;
-
       const setup = tuningDatabase[model]?.[usage]?.[budget];
 
       if (!setup) {
@@ -236,7 +224,7 @@
       }
 
       output.innerHTML = `
-        <h3>Recommended Setup (${model} - ${usage} - ${budget})</h3>
+        <h3>Tuning Setup for ${model} - ${usage} - ${budget} Budget</h3>
         <ul>
           <li><strong>Cylinder:</strong> <a href="${setup.cylinder.link}" target="_blank">${setup.cylinder.name}</a></li>
           <li><strong>Carburetor:</strong> <a href="${setup.carburetor.link}" target="_blank">${setup.carburetor.name}</a></li>
@@ -248,9 +236,23 @@
       `;
     }
 
-    modelSelect.addEventListener('change', updateRecommendation);
+    function updateScooterImage(model) {
+      const imageMap = {
+        PX80: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Vespa_PX_125.jpg/800px-Vespa_PX_125.jpg"
+      };
+      scooterImage.src = imageMap[model] || '';
+    }
+
+    modelSelect.addEventListener('change', () => {
+      updateRecommendation();
+      updateScooterImage(modelSelect.value);
+    });
+
     usageSelect.addEventListener('change', updateRecommendation);
     budgetSelect.addEventListener('change', updateRecommendation);
+
+    // Initial load
+    updateScooterImage(modelSelect.value);
   </script>
 </body>
 </html>
